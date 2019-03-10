@@ -25,17 +25,19 @@
 
   <body>
     <header>
+      <img class="logo" src="images/rocket.svg" alt="rocket logo" />
+
       <h1>Design Rocket</h1>
-      <blockquote id="qod-quote">
-        ... loading ...
-      </blockquote>
     </header>
+    <blockquote id="qod-quote">
+      ... loading ...
+    </blockquote>
 
     <main class="container">
       <form id="js-form">
         <h2>Icons</h2>
         <p>
-          <label for="search-term">Search for icons</label>
+          <label for="search-term">Search</label>
           <input
             type="text"
             name="search-term"
@@ -46,7 +48,7 @@
         </p>
 
         <p>
-          <label for="max-results">Set maximum results</label>
+          <label for="max-results">How many</label>
           <input
             type="number"
             name="max-results"
@@ -55,7 +57,7 @@
           />
         </p>
 
-        <input type="submit" value="Get icons" />
+        <button type="submit">Get icons</button>
       </form>
 
       <p id="js-error-message" class="error-message"></p>
