@@ -1,0 +1,96 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  background-color: rgb(33, 33, 33);
+  color: rgb(198, 198, 198);
+}
+
+h1,
+h2,
+h3 {
+  text-transform: uppercase;
+  font-weight: 100;
+}
+
+header h1 {
+  margin: 1rem 0 0 1rem;
+}
+
+h3 {
+  color: rgb(48, 106, 106);
+}
+
+input[type='text'],
+input[type='submit'] {
+  background-color: rgb(218, 218, 218);
+  padding-left: 5px;
+}
+
+input[type='submit'] {
+  cursor: pointer;
+  padding: 9px;
+  background-color: rgb(28, 94, 94);
+  border: none;
+  width: 50%;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: justify;
+}
+
+li {
+  width: 100%;
+  display: block;
+  padding: 10px;
+}
+
+li,
+img {
+  max-width: 500px;
+}
+
+label,
+input[type='text'],
+input[type='submit'],
+a {
+  padding-right: 10px;
+}
+
+a {
+  color: rgb(146, 254, 254);
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 20vh;
+}
+
+#results {
+  padding-top: 50px;
+}
+
+.error-message {
+  color: red;
+}
+
+.hidden {
+  display: none;
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Design Rocket</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,400"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/normalize.css" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="http://quotesondesign.com/api/3.0/api-3.0.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Design Rocket</h1>
+      <blockquote id="qod-quote">
+        ... loading ...
+      </blockquote>
+    </header>
+
+    <main class="container">
+      <form id="js-form">
+        <h2>Icons</h2>
+        <p>
+          <label for="search-term">Search for icons</label>
+          <input
+            type="text"
+            name="search-term"
+            id="js-search-term"
+            placeholder="fish"
+            required
+          />
+        </p>
+
+        <p>
+          <label for="max-results">Set maximum results</label>
+          <input
+            type="number"
+            name="max-results"
+            id="js-max-results"
+            value="10"
+          />
+        </p>
+
+        <input type="submit" value="Get icons" />
+      </form>
+
+      <p id="js-error-message" class="error-message"></p>
+      <section id="results" class="hidden">
+        <h3>Search results</h3>
+        <ul id="results-list"></ul>
+      </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
