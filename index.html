@@ -29,44 +29,78 @@
 
       <h1>Design Rocket</h1>
     </header>
-    <blockquote id="qod-quote">
-      ... loading ...
-    </blockquote>
 
-    <main class="container">
-      <form id="js-form">
-        <h2>Icons</h2>
-        <p>
-          <label for="search-term">Search</label>
-          <input
-            type="text"
-            name="search-term"
-            id="js-search-term"
-            placeholder="fish"
-            required
-          />
-        </p>
+    <main>
+      <section class="viewer">
+        <div id="particles-js"></div>
 
-        <p>
-          <label for="max-results">How many</label>
-          <input
-            type="number"
-            name="max-results"
-            id="js-max-results"
-            value="10"
-          />
-        </p>
+        <p id="js-error-message" class="error-message"></p>
 
-        <button type="submit">Get icons</button>
-      </form>
+        <section id="results" class="hidden">
+          <ul id="results-list"></ul>
+        </section>
+      </section>
+      <blockquote id="qod-quote">... loading ...</blockquote>
+      <section class="controllers">
+        <!-- <form id="js-form">
+          <h2>Icons</h2>
+          <p>
+            <label for="search-term">Search</label>
+            <input
+              type="text"
+              name="search-term"
+              id="js-search-term"
+              placeholder="fish"
+              required
+            />
+          </p>
 
-      <p id="js-error-message" class="error-message"></p>
-      <section id="results" class="hidden">
-        <h3>Search results</h3>
-        <ul id="results-list"></ul>
+          <p>
+            <label for="max-results">Amount</label>
+            <input
+              type="number"
+              name="max-results"
+              id="js-max-results"
+              value="10"
+            />
+          </p>
+
+          <button type="submit">Get icons</button>
+        </form> -->
+
+        <form id="js-form">
+          <h2>Images</h2>
+          <p>
+            <label for="search-term">Search</label>
+            <input
+              type="text"
+              name="search-term"
+              id="js-search-term"
+              placeholder="fish"
+              required
+            />
+          </p>
+
+          <p>
+            <label for="max-results">Amount</label>
+            <input
+              type="number"
+              name="max-results"
+              id="js-max-results"
+              value="10"
+            />
+          </p>
+
+          <button type="submit">Get images</button>
+        </form>
       </section>
     </main>
+    <footer>
+      <p>Built by Isaac Pierce copyright 2019</p>
+    </footer>
+    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
+    <script src="scripts/particles.js"></script>
     <script src="scripts/config.js"></script>
     <script src="scripts/index.js"></script>
   </body>
