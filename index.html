@@ -42,14 +42,40 @@
       </section>
       <blockquote id="qod-quote">... loading ...</blockquote>
       <section class="controllers">
-        <!-- <form id="js-form">
-          <h2>Icons</h2>
+        <form id="js-behance-form">
+          <h2>Get inspired</h2>
           <p>
             <label for="search-term">Search</label>
             <input
               type="text"
               name="search-term"
-              id="js-search-term"
+              id="js-behance-search-term"
+              placeholder="rhino"
+              required
+            />
+          </p>
+
+          <p>
+            <label for="time-results">Time</label>
+            <select id="js-behance-time" name="time-results">
+              <option value="all">all</option>
+              <option value="today">today</option>
+              <option value="week">week</option>
+              <option value="month">month</option>
+            </select>
+          </p>
+
+          <button type="submit">Fetch</button>
+        </form>
+
+        <form id="js-unsplash-form">
+          <h2>Get images</h2>
+          <p>
+            <label for="search-term">Search</label>
+            <input
+              type="text"
+              name="search-term"
+              id="js-unsplash-search-term"
               placeholder="fish"
               required
             />
@@ -60,38 +86,37 @@
             <input
               type="number"
               name="max-results"
-              id="js-max-results"
+              id="js-unsplash-max-results"
               value="10"
             />
           </p>
 
-          <button type="submit">Get icons</button>
-        </form> -->
+          <button type="submit">Fetch</button>
+        </form>
 
-        <form id="js-form">
-          <h2>Images</h2>
+        <form id="js-fonts-form">
+          <h2>Get Fonts</h2>
           <p>
             <label for="search-term">Search</label>
             <input
               type="text"
               name="search-term"
-              id="js-search-term"
-              placeholder="fish"
+              id="js-fonts-search-term"
+              placeholder="Enter sample text"
               required
             />
           </p>
 
           <p>
-            <label for="max-results">Amount</label>
-            <input
-              type="number"
-              name="max-results"
-              id="js-max-results"
-              value="10"
-            />
+            <label for="fonts-sort">Sort</label>
+            <select id="js-fonts-sort" name="fonts-sort">
+              <option value="popularity">100 most popular</option>
+              <option value="trending">100 top trending</option>
+              <option value="date">100 newest</option>
+            </select>
           </p>
 
-          <button type="submit">Get images</button>
+          <button type="submit">Fetch</button>
         </form>
       </section>
     </main>
