@@ -43,8 +43,8 @@ function displayResultsUnsplash(responseJson) {
     let portfolio = image.user.links.html;
 
     $('#results-list').append(
-      `<li>        
-       <a class="viewer-image" href="${imageUrl}" target="_blank"><img src=${imageUrl} alt="No result"></a>
+      `<li class="results-list__item">        
+       <a href="${imageUrl}" target="_blank"><img class="viewer-image" src=${imageUrl} alt="No result"></a>
        <a class="viewer-image__details" href=${portfolio} target="_blank">${artist}</a>
       </li>`
     );
@@ -90,8 +90,8 @@ function displayResultsBehance(responseJson) {
     let project = image.url;
 
     $('#results-list').append(
-      `<li>
-       <a class="viewer-image" href="${imageUrl}" target="_blank"><img src=${imageUrl} alt="No result"></a>
+      `<li class="results-list__item">
+       <a href="${imageUrl}" target="_blank"><img class="viewer-image" src=${imageUrl} alt="No result"></a>
        <a class="viewer-image__details" href=${project} target="_blank">${artist}</a>
       </li>`
     );
@@ -129,30 +129,44 @@ function getFontText() {
   return text;
 }
 
+function encodeFontFamily(fontFamily) {
+  const encodedFontFamily = fontFamily.split(' ').join('+');
+  return encodedFontFamily;
+}
+
+function renderHtmlFontLink(encodedFontFamily) {
+  $('head').append(
+    `<link href="https://fonts.googleapis.com/css?family=${encodedFontFamily}" rel="stylesheet"/>`
+  );
+}
+
+function makeCssFontSnippet(fontFamily, fontCategory) {
+  return `font-family: '${fontFamily}', ${fontCategory};`;
+}
+
+function getFirst100ArrayItems(array) {
+  return array.slice(0, 99);
+}
+
 function displayResultsGoogleFonts(responseJson) {
   const fonts = responseJson.items;
-  const top100Fonts = fonts.slice(0, 99);
-
-  console.log(top100Fonts);
+  const top100Fonts = getFirst100ArrayItems(fonts);
 
   $('#results-list').empty();
 
   for (let font of top100Fonts) {
     const fontFamily = font.family;
-    const encodedFontFamily = fontFamily.split(' ').join('+');
+    const fontCategory = font.category;
+    const encodedFontFamily = encodeFontFamily(fontFamily);
 
-    console.log(encodedFontFamily);
-
-    $('head').append(
-      `<link
-      href="https://fonts.googleapis.com/css?family=${encodedFontFamily}"
-      rel="stylesheet"
-    />`
-    );
+    renderHtmlFontLink(encodedFontFamily);
 
     $('#results-list').append(
-      `<li class="font-list-item">
-        <p style="font-family:${fontFamily};">${getFontText()}</p>
+      `<li  class="font-list__item">
+        <p class="font-sample" style="font-family:${fontFamily};">${getFontText()}</p>
+        <p class="font-list__details viewer-image__details">
+          ${makeCssFontSnippet(fontFamily, fontCategory)}
+        </p>
       </li>`
     );
   }
