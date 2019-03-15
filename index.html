@@ -36,13 +36,14 @@
 
         <p id="js-error-message" class="error-message"></p>
 
-        <section id="results" class="hidden">
-          <ul id="results-list"></ul>
+        <section id="results" class="results hidden">
+          <ul id="results-list" class="results-list"></ul>
         </section>
       </section>
       <blockquote id="qod-quote">... loading ...</blockquote>
+
       <section class="controllers">
-        <form id="js-behance-form">
+        <form class="form--large" id="js-behance-form">
           <h2>Get inspired</h2>
           <p>
             <label for="search-term">Search</label>
@@ -68,7 +69,7 @@
           <button type="submit">Fetch</button>
         </form>
 
-        <form id="js-unsplash-form">
+        <form class="form--large" id="js-unsplash-form">
           <h2>Get images</h2>
           <p>
             <label for="search-term">Search</label>
@@ -94,7 +95,7 @@
           <button type="submit">Fetch</button>
         </form>
 
-        <form id="js-fonts-form">
+        <form class="form--large" id="js-fonts-form">
           <h2>Get Fonts</h2>
           <p>
             <label for="search-term">Search</label>
@@ -103,6 +104,7 @@
               name="search-term"
               id="js-fonts-search-term"
               placeholder="Enter sample text"
+              maxlength="60"
               required
             />
           </p>
