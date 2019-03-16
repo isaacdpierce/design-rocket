@@ -7,6 +7,72 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
+function getFontText() {
+  const text = $('#js-fonts-search-term').val();
+  return text;
+}
+
+function encodeFontFamily(fontFamily) {
+  const encodedFontFamily = fontFamily.split(' ').join('+');
+  return encodedFontFamily;
+}
+
+function scrollToTop() {
+  $('html').scrollTop(0);
+}
+
+function renderHtmlFontLink(encodedFontFamily) {
+  $('head').append(
+    `<link href="https://fonts.googleapis.com/css?family=${encodedFontFamily}" rel="stylesheet"/>`
+  );
+}
+
+function makeCssFontSnippet(fontFamily, fontCategory) {
+  return `font-family: '${fontFamily}', ${fontCategory};`;
+}
+
+function getFirst100ArrayItems(array) {
+  return array.slice(0, 99);
+}
+
+function removeQuote() {
+  $('#qod-quote').addClass('hidden');
+}
+
+function removeResults() {
+  $('#results-list').empty();
+}
+
+function addQuote(content, title) {
+  $('#qod-quote').empty();
+  $('#qod-quote').append(`${content} <p>&mdash; ${title}</p> `);
+  $('#qod-quote').removeClass('hidden');
+}
+
+function getRandomQuote() {
+  const queryString = `filter[orderby]=rand&filter[posts_per_page]=1`;
+  const url = `${configDesignQuote.searchURL}?${queryString}`;
+
+  fetch(url, { cache: 'no-cache' })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.statusText);
+    })
+
+    .then(responseJson => displayResultsQuotes(responseJson))
+
+    .catch(err => {
+      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+    });
+}
+
+function displayResultsQuotes(responseJson) {
+  const { content, title } = responseJson[0];
+  addQuote(content, title);
+}
+
 function getUnsplashImages(query, limit = 10) {
   const params = {
     per_page: limit,
@@ -31,11 +97,15 @@ function getUnsplashImages(query, limit = 10) {
     });
 }
 
+function clearViewer() {
+  removeQuote();
+  removeResults();
+}
+
 function displayResultsUnsplash(responseJson) {
   let images = responseJson.results;
-  console.log(images);
 
-  $('#results-list').empty();
+  clearViewer();
 
   for (let image of images) {
     let imageUrl = image.urls.regular;
@@ -44,8 +114,8 @@ function displayResultsUnsplash(responseJson) {
 
     $('#results-list').append(
       `<li class="results-list__item">        
-       <a href="${imageUrl}" target="_blank"><img class="viewer-image" src=${imageUrl} alt="No result"></a>
-       <a class="viewer-image__details" href=${portfolio} target="_blank">${artist}</a>
+       <a href="${imageUrl}" target="_blank"><img class="results-image" src=${imageUrl} alt="No result"></a>
+       <a class="results-image__details" href=${portfolio} target="_blank">${artist}</a>
       </li>`
     );
   }
@@ -82,7 +152,7 @@ function getBehanceProjects(query, time) {
 function displayResultsBehance(responseJson) {
   let images = responseJson.projects;
 
-  $('#results-list').empty();
+  clearViewer();
 
   for (let image of images) {
     let imageUrl = image.covers.original;
@@ -91,8 +161,8 @@ function displayResultsBehance(responseJson) {
 
     $('#results-list').append(
       `<li class="results-list__item">
-       <a href="${imageUrl}" target="_blank"><img class="viewer-image" src=${imageUrl} alt="No result"></a>
-       <a class="viewer-image__details" href=${project} target="_blank">${artist}</a>
+       <a href="${imageUrl}" target="_blank"><img class="results-image" src=${imageUrl} alt="No result"></a>
+       <a class="results-image__details" href=${project} target="_blank">${artist}</a>
       </li>`
     );
   }
@@ -124,35 +194,11 @@ function getGoogleFonts(sortBy) {
     });
 }
 
-function getFontText() {
-  const text = $('#js-fonts-search-term').val();
-  return text;
-}
-
-function encodeFontFamily(fontFamily) {
-  const encodedFontFamily = fontFamily.split(' ').join('+');
-  return encodedFontFamily;
-}
-
-function renderHtmlFontLink(encodedFontFamily) {
-  $('head').append(
-    `<link href="https://fonts.googleapis.com/css?family=${encodedFontFamily}" rel="stylesheet"/>`
-  );
-}
-
-function makeCssFontSnippet(fontFamily, fontCategory) {
-  return `font-family: '${fontFamily}', ${fontCategory};`;
-}
-
-function getFirst100ArrayItems(array) {
-  return array.slice(0, 99);
-}
-
 function displayResultsGoogleFonts(responseJson) {
   const fonts = responseJson.items;
   const top100Fonts = getFirst100ArrayItems(fonts);
 
-  $('#results-list').empty();
+  clearViewer();
 
   for (let font of top100Fonts) {
     const fontFamily = font.family;
@@ -164,7 +210,7 @@ function displayResultsGoogleFonts(responseJson) {
     $('#results-list').append(
       `<li  class="font-list__item">
         <p class="font-sample" style="font-family:${fontFamily};">${getFontText()}</p>
-        <p class="font-list__details viewer-image__details">
+        <p class="font-list__details results-image__details">
           ${makeCssFontSnippet(fontFamily, fontCategory)}
         </p>
       </li>`
@@ -175,31 +221,63 @@ function displayResultsGoogleFonts(responseJson) {
   $('#particles-js').addClass('hidden');
 }
 
+function watchQuoteButton() {
+  $('#js-button__quote').click(event => {
+    event.preventDefault();
+
+    getRandomQuote();
+    clearViewer();
+    scrollToTop();
+  });
+}
+
+function getUserUnsplashSearchTerm() {
+  return $('#js-unsplash-search-term').val();
+}
+
+function getUserUnsplashMaxResults() {
+  return $('#js-unsplash-max-results').val();
+}
+
 function watchUnsplashForm() {
   $('#js-unsplash-form').submit(event => {
     event.preventDefault();
-    const query = $('#js-unsplash-search-term').val();
-    const limit = $('#js-unsplash-max-results').val();
+    const query = getUserUnsplashSearchTerm();
+    const limit = getUserUnsplashMaxResults();
     getUnsplashImages(query, limit);
-    $('html').scrollTop(0);
+    scrollToTop();
   });
+}
+
+function getUserBehanceSearchTerm() {
+  return $('#js-behance-search-term').val();
+}
+
+function getUserBehanceTimeSelection() {
+  return $('#js-behance-time').val();
 }
 
 function watchBehanceForm() {
   $('#js-behance-form').submit(event => {
     event.preventDefault();
-    const query = $('#js-behance-search-term').val();
-    const time = $('#js-behance-time').val();
+    const query = getUserBehanceSearchTerm();
+    const time = getUserBehanceTimeSelection();
+
     getBehanceProjects(query, time);
-    $('html').scrollTop(0);
+    scrollToTop();
   });
 }
+
+function getUserSortSelection() {
+  return $('#js-fonts-sort').val();
+}
+
 function watchFontsForm() {
   $('#js-fonts-form').submit(event => {
     event.preventDefault();
-    const sortBy = $('#js-fonts-sort').val();
+    const sortBy = getUserSortSelection();
     getGoogleFonts(sortBy);
-    $('html').scrollTop(0);
+    scrollToTop();
   });
 }
 
@@ -207,6 +285,7 @@ function watchForms() {
   watchUnsplashForm();
   watchBehanceForm();
   watchFontsForm();
+  watchQuoteButton();
 }
 
 $(watchForms);
