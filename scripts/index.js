@@ -43,9 +43,10 @@ function removeResults() {
   $('#results-list').empty();
 }
 
-function addQuote(content, title) {
+function addQuote(content, title, link) {
   $('#qod-quote').empty();
-  $('#qod-quote').append(`${content} <p>&mdash; ${title}</p> `);
+  $('#results').addClass('hidden');
+  $('#qod-quote').append(`${content} <a href="${link}">&mdash; ${title}</a> `);
   $('#qod-quote').removeClass('hidden');
 }
 
@@ -69,8 +70,8 @@ function getRandomQuote() {
 }
 
 function displayResultsQuotes(responseJson) {
-  const { content, title } = responseJson[0];
-  addQuote(content, title);
+  const { content, title, link } = responseJson[0];
+  addQuote(content, title, link);
 }
 
 function getUnsplashImages(query, limit = 10) {

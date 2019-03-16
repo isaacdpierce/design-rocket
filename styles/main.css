@@ -161,13 +161,9 @@ button:focus {
 }
 
 .form__button span {
-  background: linear-gradient(
-    to bottom right,
-    rgb(17, 58, 119),
-    rgb(0, 14, 31)
-  );
+  background: linear-gradient(to bottom right, rgb(32, 51, 77), rgb(0, 25, 55));
   color: transparent;
-  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.111);
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.132);
   -webkit-background-clip: text;
   -moz-background-clip: text;
   background-clip: text;
@@ -175,6 +171,8 @@ button:focus {
 
 a {
   color: var(--brand-color-1);
+  text-decoration: none;
+  z-index: 199;
 }
 
 footer {
@@ -191,7 +189,7 @@ footer {
   border-bottom-color: rgb(36, 36, 36);
   border-radius: 50%;
   border-style: solid;
-  border-top-color: rgb(28, 28, 28);
+  border-top-color: rgb(24, 24, 24);
   border-width: 15px;
   box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.166);
   grid-column: 1 / -1;
