@@ -17,12 +17,12 @@ html {
 body {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 6rem 1fr;
+  grid-template-rows: 9vh 1fr;
   grid-gap: 1rem;
   font-size: 1.6rem;
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
-  background-color: rgb(33, 33, 33);
+  background: rgb(7, 7, 7) url(/images/assault.png);
   color: rgb(198, 198, 198);
 }
 
@@ -39,13 +39,15 @@ main {
   grid-row: 2 / -1;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 91vh 1fr;
   overflow: hidden;
 }
 
 blockquote {
-  grid-column: 1 / span 6;
+  align-self: center;
   max-width: 50rem;
   padding: 2rem;
+  z-index: 599;
 }
 
 h1,
@@ -67,7 +69,10 @@ header h1 {
   text-align: left;
   max-width: 40rem;
   padding: 5rem;
+  background-color: rgba(255, 255, 255, 0.036);
   box-shadow: inset 0px -1px 1px 1px rgba(0, 0, 0, 0.509);
+  border-bottom-color: rgb(36, 36, 36);
+  border-top: 1px solid #999;
 }
 
 input[type='text'],
@@ -76,13 +81,62 @@ input[type='number'] {
   padding-left: 5px;
 }
 
-button[type='submit'] {
+button:focus {
+  outline: 0;
+}
+
+.form__button {
+  color: var(--brand-color-3);
+  /* text-transform: uppercase; */
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  font-weight: 700;
   cursor: pointer;
   padding: 1rem;
   background-color: var(--brand-color-4);
   border: none;
   border-radius: 2px;
-  width: 100%;
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  background-color: var(--brand-color-3);
+  background-image: radial-gradient(
+      circle 200px at 0 0,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.694)
+    ),
+    radial-gradient(
+      circle 120px at 60px 60px,
+      rgba(255, 255, 255, 0.33),
+      rgba(0, 0, 0, 0)
+    );
+  background-repeat: no-repeat, no-repeat;
+  box-shadow: 3px 3px 6px 3px rgba(0, 0, 0, 0.152);
+  position: relative;
+  transition: all ease-in-out 0.3s;
+}
+
+.form__button:hover,
+.form__button span:hover {
+  filter: brightness(110%);
+}
+
+.form__button:hover {
+  box-shadow: 2px 2px 6px 3px rgba(0, 0, 0, 0.152);
+}
+
+.form__button span {
+  background: linear-gradient(
+    to bottom right,
+    rgb(17, 58, 119),
+    rgb(0, 14, 31)
+  );
+  color: transparent;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.111);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
 }
 
 a {
@@ -114,9 +168,27 @@ footer {
   transform: translateX(24vw);
 }
 
-/* ? Why  is this not taking margin ? */
+/* ! Why  is this not taking margin ? */
 .results-list__item:last-child {
   padding-right: 33rem;
+}
+
+.viewer {
+  align-items: center;
+  background: radial-gradient(rgb(21, 21, 21), rgb(28, 28, 28));
+  border-bottom-color: rgb(36, 36, 36);
+  border-radius: 50%;
+  border-style: solid;
+  border-top-color: rgb(28, 28, 28);
+  border-width: 15px;
+  box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.166);
+  display: flex;
+  grid-column: 1 / -1;
+  height: 75vh;
+  justify-content: center;
+  overflow: hidden;
+  transform: translateX(-25vw);
+  width: 150vw;
 }
 
 .viewer-image {
@@ -131,7 +203,6 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.5rem;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.851);
@@ -148,25 +219,13 @@ footer {
   height: 3.5rem;
 }
 
-.viewer {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  height: 70vh;
-  width: 150vw;
-  background: radial-gradient(rgb(21, 21, 21), rgb(28, 28, 28));
-  border-radius: 50%;
-  overflow: hidden;
-  transform: translateX(-25vw);
-}
-
 .font-list__item {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 2rem;
   height: 73vh;
-  transform: translateX(59vw);
+  transform: translateX(45vw);
 }
 
 .font-sample {
