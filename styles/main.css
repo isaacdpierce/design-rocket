@@ -45,9 +45,10 @@ main {
 
 blockquote {
   align-self: center;
-  max-width: 50rem;
+  font-size: 2.5rem;
+  max-width: 60rem;
+  text-shadow: 1px 1px 1px black;
   padding: 2rem;
-  z-index: 599;
 }
 
 h1,
@@ -64,15 +65,31 @@ header h1 {
   font-size: 2rem;
 }
 
-.form--large {
-  display: inline-block;
-  text-align: left;
-  max-width: 40rem;
-  padding: 5rem;
+.form-styles {
   background-color: rgba(255, 255, 255, 0.036);
-  box-shadow: inset 0px -1px 1px 1px rgba(0, 0, 0, 0.509);
+  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.139);
   border-bottom-color: rgb(36, 36, 36);
-  border-top: 1px solid #999;
+  border-top: 1px solid rgb(67, 67, 67);
+  border-left: 1px solid rgb(29, 29, 29);
+  border-right: 1px solid rgb(29, 29, 29);
+  border-bottom: 2px solid rgb(23, 23, 23);
+}
+
+.form--large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-transform: uppercase;
+  max-width: 40rem;
+  padding: 4rem 5rem;
+}
+
+.form--large h2 {
+  margin-bottom: 2rem;
+}
+
+label {
+  margin-right: 1rem;
 }
 
 input[type='text'],
@@ -81,21 +98,38 @@ input[type='number'] {
   padding-left: 5px;
 }
 
+button {
+  border: none;
+  font-family: inherit;
+  font-weight: inherit;
+}
+
 button:focus {
   outline: 0;
 }
 
+.quote-button__container {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  padding: 5rem 0;
+}
+
+.button__quote {
+  color: white;
+  padding: 1rem 2rem;
+  background-color: rgba(255, 255, 255, 0.036);
+}
+
 .form__button {
   color: var(--brand-color-3);
-  /* text-transform: uppercase; */
+  margin-top: 2rem;
   font-size: 2.5rem;
   letter-spacing: 2px;
   font-weight: 700;
   cursor: pointer;
   padding: 1rem;
   background-color: var(--brand-color-4);
-  border: none;
-  border-radius: 2px;
   border-radius: 50%;
   width: 180px;
   height: 180px;
@@ -152,9 +186,35 @@ footer {
   padding-bottom: 1rem;
 }
 
+.viewer {
+  background: radial-gradient(rgb(12, 12, 12), rgb(26, 26, 26));
+  border-bottom-color: rgb(36, 36, 36);
+  border-radius: 50%;
+  border-style: solid;
+  border-top-color: rgb(28, 28, 28);
+  border-width: 15px;
+  box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.166);
+  grid-column: 1 / -1;
+  height: 75vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150vw;
+  transform: translateX(-16.5%);
+  overflow: hidden;
+}
+
+.results {
+  overflow-y: hidden;
+  overflow-x: scroll;
+  position: relative;
+  width: 100vw;
+}
+
 .results-list {
   display: flex;
-  justify-content: start;
+  justify-content: stretch;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -162,42 +222,22 @@ footer {
 
 .results-list__item {
   margin-right: 1rem;
-  display: grid;
-  grid-template-areas: 1fr;
   position: relative;
-  transform: translateX(24vw);
+  display: grid;
+  grid-template-areas: auto;
 }
 
-/* ! Why  is this not taking margin ? */
-.results-list__item:last-child {
-  padding-right: 33rem;
-}
-
-.viewer {
-  align-items: center;
-  background: radial-gradient(rgb(21, 21, 21), rgb(28, 28, 28));
-  border-bottom-color: rgb(36, 36, 36);
-  border-radius: 50%;
-  border-style: solid;
-  border-top-color: rgb(28, 28, 28);
-  border-width: 15px;
-  box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.166);
-  display: flex;
-  grid-column: 1 / -1;
-  height: 75vh;
-  justify-content: center;
-  overflow: hidden;
-  transform: translateX(-25vw);
-  width: 150vw;
-}
-
-.viewer-image {
+.results-image {
   height: 73vh;
   cursor: pointer;
-  z-index: 99;
 }
 
-.viewer-image__details {
+.results-image__details,
+.results-image {
+  grid-column: 1/ -1;
+}
+
+.results-image__details {
   position: absolute;
   top: -1rem;
   display: flex;
@@ -210,8 +250,8 @@ footer {
   transition: opacity 0.6s ease-in-out;
 }
 
-.viewer-image:hover + .viewer-image__details,
-.viewer-image__details:hover {
+.results-image:hover + .results-image__details,
+.results-image__details:hover {
   opacity: 1;
 }
 
@@ -225,7 +265,7 @@ footer {
   align-items: center;
   padding: 2rem;
   height: 73vh;
-  transform: translateX(45vw);
+  /* transform: translateX(45vw); */
 }
 
 .font-sample {
@@ -252,11 +292,7 @@ footer {
   grid-row: 3 / auto;
   display: flex;
   justify-content: space-around;
-}
-
-.results {
-  overflow-x: scroll;
-  overflow-y: hidden;
+  padding-bottom: 10rem;
 }
 
 .error-message {

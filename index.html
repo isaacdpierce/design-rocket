@@ -16,11 +16,11 @@
       integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
       crossorigin="anonymous"
     ></script>
-    <script
+    <!-- <script
       src="http://quotesondesign.com/api/3.0/api-3.0.js"
       type="text/javascript"
       charset="utf-8"
-    ></script>
+    ></script> -->
   </head>
 
   <body>
@@ -36,15 +36,19 @@
 
         <p id="js-error-message" class="error-message"></p>
 
-        <blockquote id="qod-quote">... loading ...</blockquote>
+        <blockquote id="qod-quote" class="hidden"></blockquote>
 
         <section id="results" class="results hidden">
           <ul id="results-list" class="results-list"></ul>
         </section>
       </section>
-
+      <section class="quote-button__container">
+        <button id="js-button__quote" class="button__quote form-styles">
+          Inspirational quote generator
+        </button>
+      </section>
       <section class="controllers">
-        <form class="form--large" id="js-behance-form">
+        <form class="form--large form-styles" id="js-behance-form">
           <h2>Get inspired</h2>
           <p>
             <label for="search-term">Search</label>
@@ -70,7 +74,7 @@
           <button class="form__button" type="submit"><span>Fetch</span></button>
         </form>
 
-        <form class="form--large" id="js-unsplash-form">
+        <form class="form--large form-styles" id="js-unsplash-form">
           <h2>Get images</h2>
           <p>
             <label for="search-term">Search</label>
@@ -96,7 +100,7 @@
           <button class="form__button" type="submit"><span>Fetch</span></button>
         </form>
 
-        <form class="form--large" id="js-fonts-form">
+        <form class="form--large form-styles" id="js-fonts-form">
           <h2>Get Fonts</h2>
           <p>
             <label for="search-term">Search</label>

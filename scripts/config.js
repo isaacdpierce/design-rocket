@@ -8,9 +8,11 @@ const configBehance = {
   searchURL: 'https://behance.net/v2/projects',
 };
 
-// https://www.googleapis.com/webfonts/v1/webfonts?key=YOUR-API-KEY
-
 const configGoogleFonts = {
   apiKey: 'AIzaSyAF440eqGpPOUFx-_ag7l7scuW_Qz9qcbs',
   searchURL: 'https://www.googleapis.com/webfonts/v1/webfonts',
+};
+
+const configDesignQuote = {
+  searchURL: 'https://quotesondesign.com/wp-json/posts',
 };
