@@ -33,7 +33,7 @@ function activateParticlesBackground() {
 }
 
 function removeResults() {
-  $('#results__list').empty();
+  $('#results-list').empty();
 }
 
 function removeQuote() {
@@ -75,6 +75,29 @@ function displayResultsQuotes(responseJson) {
 function clearViewer() {
   removeQuote();
   removeResults();
+}
+
+function getGoogleFonts(sortBy) {
+  const params = {
+    sort: sortBy,
+    key: configGoogleFonts.apiKey,
+  };
+  const queryString = formatQueryParams(params);
+  const url = `${configGoogleFonts.searchURL}?${queryString}`;
+
+  fetch(url)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.statusText);
+    })
+
+    .then(responseJson => displayResultsGoogleFonts(responseJson))
+
+    .catch(err => {
+      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+    });
 }
 
 // ! QUOTES ////////////////////////////////////////
@@ -124,15 +147,11 @@ function getUnsplashImages(query, limit = 10) {
 function renderUnsplashResults(imageDetails) {
   const { imageUrl, portfolio, artist } = imageDetails;
 
-  return $('#results__list').append(
-    `<li class="results__item">        
-      <a href="${imageUrl}" target="_blank">
-        <img class="results__image" src=${imageUrl} alt="No result">
-      </a>
-      <a class="results__overlay" href=${portfolio} target="_blank">
-        ${artist}
-      </a>
-    </li>`
+  return $('#results-list').append(
+    `<li class="results-list__item">        
+       <a href="${imageUrl}" target="_blank"><img class="results-image" src=${imageUrl} alt="No result"></a>
+       <a class="results-image__details" href=${portfolio} target="_blank">${artist}</a>
+      </li>`
   );
 }
 
@@ -182,9 +201,7 @@ function getBehanceProjects(query, time) {
   };
   const queryString = formatQueryParams(params);
   const url = `${configBehance.searchURL}?${queryString}`;
-  const proxyurl = 'https://fathomless-river-91209.herokuapp.com/';
-  const fullUrl = proxyurl + url;
-  console.log(fullUrl);
+  const proxyurl = 'https://cors-anywhere.herokuapp.com/';
 
   fetch(proxyurl + url)
     .then(response => {
@@ -211,14 +228,10 @@ function displayResultsBehance(responseJson) {
     let artist = image.name;
     let project = image.url;
 
-    $('#results__list').append(
-      `<li class="results__item">
-        <a href="${imageUrl}" target="_blank">
-          <img class="results__image" src=${imageUrl} alt="No result">
-        </a>
-        <a class="results__overlay" href=${project} target="_blank">
-          ${artist}
-        </a>
+    $('#results-list').append(
+      `<li class="results-list__item">
+       <a href="${imageUrl}" target="_blank"><img class="results-image" src=${imageUrl} alt="No result"></a>
+       <a class="results-image__details" href=${project} target="_blank">${artist}</a>
       </li>`
     );
   }
@@ -249,37 +262,13 @@ function makeHtmlFontLink(encodedFontFamily) {
   );
 }
 
-function getGoogleFonts(sortBy) {
-  const params = {
-    sort: sortBy,
-    key: configGoogleFonts.apiKey,
-  };
-  const queryString = formatQueryParams(params);
-  const url = `${configGoogleFonts.searchURL}?${queryString}`;
-
-  fetch(url)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.statusText);
-    })
-
-    .then(responseJson => displayResultsGoogleFonts(responseJson))
-
-    .catch(err => {
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
-    });
-}
-
-function makeFontsResultsHtml(fontFamily, fontCategory) {
-  return $('#results__list').append(
-    `<li class="results__item">
-        <p class="results__font" style="font-family:$   {fontFamily};">${getUserFontText()}
-        </p>
-        <span class="results__overlay">
+function makeFontsResultsHtml() {
+  return $('#results-list').append(
+    `<li  class="font-list__item">
+        <p class="font-sample" style="font-family:${fontFamily};">${getUserFontText()}</p>
+        <p class="font-list__details results-image__details">
           ${makeCssFontSnippet(fontFamily, fontCategory)}
-        </span>
+        </p>
       </li>`
   );
 }
@@ -296,7 +285,7 @@ function displayResultsGoogleFonts(responseJson) {
     const encodedFontFamily = encodeFontFamily(fontFamily);
 
     makeHtmlFontLink(encodedFontFamily);
-    makeFontsResultsHtml(fontFamily, fontCategory);
+    makeFontsResultsHtml();
   }
 
   $('#results').removeClass('hidden');
