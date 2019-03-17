@@ -65,7 +65,7 @@ h2 {
 h2 {
   color: rgba(0, 0, 0, 0.659);
   font-weight: 700;
-  text-shadow: 1px 1px rgb(72, 72, 72);
+  text-shadow: 1px 1px rgb(62, 62, 62);
 }
 
 header h1 {
@@ -124,6 +124,8 @@ button:focus {
   justify-content: center;
   margin-bottom: 5rem;
   padding: 3rem 0;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.235);
+  border-top: 1px inset rgba(255, 255, 255, 0.104);
 }
 
 .quote__container {
@@ -133,20 +135,21 @@ button:focus {
 }
 
 .quote__container label {
-  color: rgb(9, 9, 9);
   color: rgba(0, 0, 0, 0.659);
-  font-size: 1.7rem;
   font-weight: 700;
+  font-size: 1.7rem;
   padding-bottom: 1rem;
   text-align: center;
-  text-shadow: 1px 1px rgb(60, 60, 60);
+  text-shadow: 1px 1px rgb(63, 63, 63);
   text-transform: uppercase;
 }
 
 .quote__button {
-  background: radial-gradient(var(--brand-color-4), rgb(18, 50, 73));
+  background: linear-gradient(var(--brand-color-4), rgb(18, 50, 73));
   padding: 1rem 2rem;
+  font-size: 1.8rem;
   transition: all ease-in-out 0.3s;
+  border-radius: 4px;
 }
 
 .form__button {
@@ -180,7 +183,7 @@ button:focus {
 .form__button:hover,
 .form__button span:hover,
 .quote__button:hover {
-  filter: brightness(110%);
+  filter: brightness(112%);
 }
 .form__button:focus,
 .form__button span:focus,
@@ -197,7 +200,7 @@ button:focus {
 .quote__button {
   color: rgba(2, 29, 75, 0.728);
   font-weight: 700;
-  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.132);
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.166);
 }
 
 a {
@@ -319,6 +322,7 @@ footer {
 
 .copyright {
   color: rgb(82, 82, 82);
+  padding-bottom: 2rem;
 }
 
 .error-message {
@@ -339,6 +343,20 @@ footer {
   height: 120px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
+}
+
+canvas {
+  display: block;
+}
+
+#particles-js {
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  opacity: 0.3;
+  position: absolute;
+  width: 100%;
 }
 
 @-webkit-keyframes spin {
@@ -365,18 +383,4 @@ footer {
   100% {
     transform: rotate(360deg);
   }
-}
-
-canvas {
-  display: block;
-}
-
-#particles-js {
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  opacity: 0.3;
-  position: absolute;
-  width: 100%;
 }
