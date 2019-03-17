@@ -273,7 +273,7 @@ footer {
 .form__button span:focus,
 .quote__button:focus {
   box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.063);
-  filter: brightness(90%);
+  filter: brightness(80%);
 }
 
 .form__button span,

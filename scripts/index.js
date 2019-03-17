@@ -12,7 +12,11 @@ function toggleLoadingAnimation() {
 }
 
 function scrollToTop() {
-  $(window).scrollTop(0);
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  });
 }
 
 function getFirst100ArrayItems(array) {
