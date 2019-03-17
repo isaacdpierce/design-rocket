@@ -7,6 +7,10 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
+function toggleLoadingAnimation() {
+  $('#js-loader').toggleClass('hidden');
+}
+
 function scrollToTop() {
   $('html').scrollTop(0);
 }
@@ -15,7 +19,7 @@ function getFirst100ArrayItems(array) {
   return array.slice(0, 99);
 }
 
-function activateParticlesBackground() {
+function showParticlesBackground() {
   $('#particles-js').removeClass('hidden');
 }
 
@@ -28,22 +32,24 @@ function hideParticlesBackGround() {
 }
 
 function removeResults() {
+  $('#results').addClass('hidden');
   $('#results__list').empty();
 }
 
 function clearViewer() {
-  hideQuote();
-  hideParticlesBackGround();
   removeResults();
+  hideParticlesBackGround();
 }
 
 // ! QUOTES ////////////////////////////////////////
 function watchQuoteButton() {
   $('#js-button__quote').click(event => {
     event.preventDefault();
-
-    getRandomQuote();
+    clearViewer();
+    toggleLoadingAnimation();
     scrollToTop();
+    getRandomQuote();
+    showParticlesBackGround();
   });
 }
 
@@ -68,33 +74,35 @@ function getRandomQuote() {
 
 function displayResultsQuotes(responseJson) {
   const { content, title, link } = responseJson[0];
-  clearQuote();
-  hideResults();
   makeQuoteHtml(content, title, link);
-  showQuote();
-  activateParticlesBackground();
-}
-
-function hideQuote() {
-  $('#qod-quote').addClass('hidden');
+  toggleLoadingAnimation();
+  showResults();
+  showParticlesBackground();
 }
 
 function makeQuoteHtml(content, title, link) {
-  $('#qod-quote').append(`${content} <a href="${link}">&mdash; ${title}</a> `);
-}
-
-function showQuote() {
-  $('#qod-quote').removeClass('hidden');
-}
-
-function clearQuote() {
-  $('#qod-quote').empty();
-}
-function hideResults() {
-  $('#results').addClass('hidden');
+  $('#results__list').append(
+    `<li class='results__quote'>
+      <blockquote id='qod-quote'>
+        ${content} <a href='${link}'>&mdash; ${title}</a>
+      </blockquote>
+    </li>`
+  );
 }
 
 // !UNSPLASH //////////////////////////////////
+function watchUnsplashForm() {
+  $('#js-unsplash-form').submit(event => {
+    event.preventDefault();
+    clearViewer();
+    toggleLoadingAnimation();
+    const query = getUserUnsplashSearchTerm();
+    const limit = getUserUnsplashMaxResults();
+    getUnsplashImages(query, limit);
+    scrollToTop();
+  });
+}
+
 function getUserUnsplashSearchTerm() {
   return $('#js-unsplash-search-term').val();
 }
@@ -145,8 +153,6 @@ function makeUnsplashHtmlResults(imageDetails) {
 function displayResultsUnsplash(responseJson) {
   const images = responseJson.results;
 
-  clearViewer();
-
   for (let image of images) {
     const imageDetails = {
       imageUrl: image.urls.regular,
@@ -156,17 +162,8 @@ function displayResultsUnsplash(responseJson) {
 
     makeUnsplashHtmlResults(imageDetails);
   }
+  toggleLoadingAnimation();
   showResults();
-}
-
-function watchUnsplashForm() {
-  $('#js-unsplash-form').submit(event => {
-    event.preventDefault();
-    const query = getUserUnsplashSearchTerm();
-    const limit = getUserUnsplashMaxResults();
-    getUnsplashImages(query, limit);
-    scrollToTop();
-  });
 }
 
 // !BEHANCE /////////////////////////////////
@@ -176,6 +173,8 @@ function watchBehanceForm() {
     const query = getUserBehanceSearchTerm();
     const time = getUserBehanceTimeSelection();
 
+    clearViewer();
+    toggleLoadingAnimation();
     getBehanceProjects(query, time);
     scrollToTop();
   });
@@ -238,18 +237,19 @@ function makeBehanceHtmlResults(imageDetails) {
 
 function displayResultsBehance(responseJson) {
   const images = responseJson.projects;
-
-  clearViewer();
+  const imageNumber = '404';
 
   for (let image of images) {
     const imageDetails = {
-      imageUrl: image.covers.original,
+      imageUrl: image.covers[404],
       artist: image.name,
       project: image.url,
     };
+    console.log(imageDetails.imageUrl);
 
     makeBehanceHtmlResults(imageDetails);
   }
+  toggleLoadingAnimation();
   showResults();
 }
 
@@ -257,6 +257,8 @@ function displayResultsBehance(responseJson) {
 function watchFontsForm() {
   $('#js-fonts-form').submit(event => {
     event.preventDefault();
+    clearViewer();
+    toggleLoadingAnimation();
     const sortBy = getUserFontSortSelection();
     getGoogleFonts(sortBy);
     scrollToTop();
@@ -330,8 +332,6 @@ function displayResultsGoogleFonts(responseJson) {
   const fonts = responseJson.items;
   const top100Fonts = getFirst100ArrayItems(fonts);
 
-  clearViewer();
-
   for (let font of top100Fonts) {
     const fontFamily = font.family;
     const fontCategory = font.category;
@@ -341,6 +341,7 @@ function displayResultsGoogleFonts(responseJson) {
     makeFontsResultsHtml(fontFamily, fontCategory);
   }
   showResults();
+  toggleLoadingAnimation();
 }
 
 function watchForms() {
