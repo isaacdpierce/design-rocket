@@ -12,7 +12,7 @@ function toggleLoadingAnimation() {
 }
 
 function scrollToTop() {
-  $('html').scrollTop(0);
+  $(window).scrollTop(0);
 }
 
 function getFirst100ArrayItems(array) {
