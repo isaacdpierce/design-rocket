@@ -19,7 +19,7 @@ html {
 }
 
 body {
-  background: url(../images/assault.png);
+  background: url(../images/assault.png) rgb(16, 16, 16);
   color: rgb(198, 198, 198);
   display: grid;
   font-family: 'Roboto', sans-serif;
