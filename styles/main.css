@@ -19,7 +19,7 @@ html {
 }
 
 body {
-  background: url(../images/assault.png) rgb(16, 16, 16);
+  background: url(../images/assault.png) rgb(24, 24, 24);
   color: rgb(198, 198, 198);
   display: grid;
   font-family: 'Roboto', sans-serif;
@@ -74,27 +74,14 @@ header h1 {
   padding-left: 1rem;
 }
 
-.form-styles {
-  background-color: rgba(255, 255, 255, 0.036);
-  border-bottom-color: rgb(36, 36, 36);
-  border-bottom: 2px solid rgb(23, 23, 23);
-  border-left: 1px solid rgb(29, 29, 29);
-  border-right: 1px solid rgb(29, 29, 29);
-  border-top: 1px solid rgb(67, 67, 67);
-  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.139);
+a {
+  color: var(--brand-color-1);
+  text-decoration: none;
+  z-index: 199;
 }
 
-.form--large {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  max-width: 40rem;
-  padding: 4rem 5rem;
-  text-transform: uppercase;
-}
-
-.form--large h2 {
-  margin-bottom: 2rem;
+canvas {
+  display: block;
 }
 
 label {
@@ -117,98 +104,6 @@ button:focus {
   outline: 0;
 }
 
-.quote__row {
-  background-color: rgba(255, 255, 255, 0.036);
-  display: flex;
-  grid-column: 1 / -1;
-  justify-content: center;
-  margin-bottom: 5rem;
-  padding: 3rem 0;
-  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.235);
-  border-top: 1px inset rgba(255, 255, 255, 0.104);
-}
-
-.quote__container {
-  display: flex;
-  flex-direction: column;
-  width: 30rem;
-}
-
-.quote__container label {
-  color: rgba(0, 0, 0, 0.659);
-  font-weight: 700;
-  font-size: 1.7rem;
-  padding-bottom: 1rem;
-  text-align: center;
-  text-shadow: 1px 1px rgb(63, 63, 63);
-  text-transform: uppercase;
-}
-
-.quote__button {
-  background: linear-gradient(var(--brand-color-4), rgb(18, 50, 73));
-  padding: 1rem 2rem;
-  font-size: 1.8rem;
-  transition: all ease-in-out 0.3s;
-  border-radius: 4px;
-}
-
-.form__button {
-  background-image: radial-gradient(
-      circle 200px at 0 0,
-      rgba(0, 0, 0, 0),
-      rgba(0, 0, 0, 0),
-      rgba(0, 0, 0, 0.694)
-    ),
-    radial-gradient(
-      circle 120px at 60px 60px,
-      rgba(255, 255, 255, 0.33),
-      rgba(0, 0, 0, 0)
-    );
-  background-repeat: no-repeat, no-repeat;
-  box-shadow: 3px 3px 6px 3px rgba(0, 0, 0, 0.152);
-  background-color: rgb(29, 82, 119);
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 2.5rem;
-  font-weight: 700;
-  height: 180px;
-  letter-spacing: 2px;
-  margin-top: 2rem;
-  padding: 1rem;
-  position: relative;
-  transition: all ease-in-out 0.3s;
-  width: 180px;
-}
-
-.form__button:hover,
-.form__button span:hover,
-.quote__button:hover {
-  filter: brightness(112%);
-}
-.form__button:focus,
-.form__button span:focus,
-.quote__button:focus {
-  box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.063);
-  filter: brightness(90%);
-}
-
-.form__button:hover {
-  box-shadow: 2px 2px 6px 3px rgba(0, 0, 0, 0.152);
-}
-
-.form__button span,
-.quote__button {
-  color: rgba(2, 29, 75, 0.728);
-  font-weight: 700;
-  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.166);
-}
-
-a {
-  color: var(--brand-color-1);
-  text-decoration: none;
-  z-index: 199;
-}
-
 footer {
   align-items: flex-end;
   display: flex;
@@ -221,7 +116,7 @@ footer {
 .viewer {
   align-items: center;
   background: radial-gradient(rgb(12, 12, 12), rgb(26, 26, 26));
-  border-bottom-color: rgb(36, 36, 36);
+  border-bottom-color: rgb(46, 46, 46);
   border-radius: 50%;
   border-style: solid;
   border-top-color: rgb(24, 24, 24);
@@ -320,6 +215,122 @@ footer {
   padding-bottom: 10rem;
 }
 
+.form--large {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 40rem;
+  padding: 4rem 5rem;
+  text-transform: uppercase;
+}
+
+.form--large h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+  padding: 2rem 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.063);
+}
+
+.form__button {
+  background-image: radial-gradient(
+      circle 200px at 0 0,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.694)
+    ),
+    radial-gradient(
+      circle 120px at 60px 60px,
+      rgba(255, 255, 255, 0.33),
+      rgba(0, 0, 0, 0)
+    );
+  background-repeat: no-repeat, no-repeat;
+  box-shadow: 3px 3px 6px 3px rgba(0, 0, 0, 0.152);
+  background-color: rgb(29, 82, 119);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 2.5rem;
+  font-weight: 700;
+  height: 180px;
+  letter-spacing: 2px;
+  margin-top: 2rem;
+  padding: 1rem;
+  position: relative;
+  transition: all ease-in-out 0.3s;
+  width: 180px;
+}
+
+.form__button:hover {
+  box-shadow: 2px 2px 6px 3px rgba(0, 0, 0, 0.152);
+}
+
+.form__button:hover,
+.form__button span:hover,
+.quote__button:hover {
+  filter: brightness(112%);
+}
+.form__button:focus,
+.form__button span:focus,
+.quote__button:focus {
+  box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.063);
+  filter: brightness(90%);
+}
+
+.form__button span,
+.quote__button {
+  color: rgba(2, 29, 75, 0.728);
+  font-weight: 700;
+}
+
+.form--large h2,
+.form--large,
+.quote__button,
+.quote__row {
+  background-color: rgba(255, 255, 255, 0.036);
+  border-bottom-color: rgb(36, 36, 36);
+  border-top: 1px solid rgb(67, 67, 67);
+  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.228);
+}
+
+.quote__container label,
+.form--large h2,
+.quote__button,
+.form__button span {
+  text-shadow: 1px 1px rgba(250, 250, 250, 0.132);
+}
+
+.quote__row {
+  background-color: rgba(255, 255, 255, 0.036);
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: center;
+  margin-bottom: 5rem;
+  padding: 3rem 0;
+}
+
+.quote__container {
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+}
+
+.quote__container label {
+  color: rgba(0, 0, 0, 0.659);
+  font-weight: 700;
+  font-size: 1.7rem;
+  padding-bottom: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.quote__button {
+  background: linear-gradient(var(--brand-color-4), rgb(18, 50, 73));
+  padding: 1rem 2rem;
+  font-size: 1.8rem;
+  transition: all ease-in-out 0.3s;
+  border-radius: 4px;
+}
+
 .copyright {
   color: rgb(82, 82, 82);
   padding-bottom: 2rem;
@@ -345,10 +356,6 @@ footer {
   animation: spin 2s linear infinite;
 }
 
-canvas {
-  display: block;
-}
-
 #particles-js {
   position: absolute;
   width: 100%;
@@ -362,7 +369,7 @@ canvas {
 
 @-webkit-keyframes spin {
   0% {
-    opacity: 0;
+    opacity: 0.3;
     -webkit-transform: rotate(0deg);
   }
   10% {
@@ -381,6 +388,7 @@ canvas {
   10% {
     opacity: 1;
   }
+
   100% {
     transform: rotate(360deg);
   }
