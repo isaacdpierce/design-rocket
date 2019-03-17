@@ -7,21 +7,8 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
-function getUserFontText() {
-  return $('#js-fonts-search-term').val();
-}
-
-function encodeFontFamily(fontFamily) {
-  const encodedFontFamily = fontFamily.split(' ').join('+');
-  return encodedFontFamily;
-}
-
 function scrollToTop() {
   $('html').scrollTop(0);
-}
-
-function makeCssFontSnippet(fontFamily, fontCategory) {
-  return `font-family: '${fontFamily}', ${fontCategory};`;
 }
 
 function getFirst100ArrayItems(array) {
@@ -32,20 +19,32 @@ function activateParticlesBackground() {
   $('#particles-js').removeClass('hidden');
 }
 
+function showResults() {
+  $('#results').removeClass('hidden');
+}
+
+function hideParticlesBackGround() {
+  $('#particles-js').addClass('hidden');
+}
+
 function removeResults() {
   $('#results__list').empty();
 }
 
-function removeQuote() {
-  $('#qod-quote').addClass('hidden');
+function clearViewer() {
+  hideQuote();
+  hideParticlesBackGround();
+  removeResults();
 }
 
-function addQuote(content, title, link) {
-  $('#qod-quote').empty();
-  $('#results').addClass('hidden');
-  $('#qod-quote').append(`${content} <a href="${link}">&mdash; ${title}</a> `);
-  $('#qod-quote').removeClass('hidden');
-  activateParticlesBackground();
+// ! QUOTES ////////////////////////////////////////
+function watchQuoteButton() {
+  $('#js-button__quote').click(event => {
+    event.preventDefault();
+
+    getRandomQuote();
+    scrollToTop();
+  });
 }
 
 function getRandomQuote() {
@@ -69,23 +68,30 @@ function getRandomQuote() {
 
 function displayResultsQuotes(responseJson) {
   const { content, title, link } = responseJson[0];
-  addQuote(content, title, link);
+  clearQuote();
+  hideResults();
+  makeQuoteHtml(content, title, link);
+  showQuote();
+  activateParticlesBackground();
 }
 
-function clearViewer() {
-  removeQuote();
-  removeResults();
+function hideQuote() {
+  $('#qod-quote').addClass('hidden');
 }
 
-// ! QUOTES ////////////////////////////////////////
-function watchQuoteButton() {
-  $('#js-button__quote').click(event => {
-    event.preventDefault();
+function makeQuoteHtml(content, title, link) {
+  $('#qod-quote').append(`${content} <a href="${link}">&mdash; ${title}</a> `);
+}
 
-    getRandomQuote();
-    clearViewer();
-    scrollToTop();
-  });
+function showQuote() {
+  $('#qod-quote').removeClass('hidden');
+}
+
+function clearQuote() {
+  $('#qod-quote').empty();
+}
+function hideResults() {
+  $('#results').addClass('hidden');
 }
 
 // !UNSPLASH //////////////////////////////////
@@ -121,7 +127,7 @@ function getUnsplashImages(query, limit = 10) {
     });
 }
 
-function renderUnsplashResults(imageDetails) {
+function makeUnsplashHtmlResults(imageDetails) {
   const { imageUrl, portfolio, artist } = imageDetails;
 
   return $('#results__list').append(
@@ -137,7 +143,7 @@ function renderUnsplashResults(imageDetails) {
 }
 
 function displayResultsUnsplash(responseJson) {
-  let images = responseJson.results;
+  const images = responseJson.results;
 
   clearViewer();
 
@@ -148,11 +154,9 @@ function displayResultsUnsplash(responseJson) {
       portfolio: image.user.links.html,
     };
 
-    renderUnsplashResults(imageDetails);
+    makeUnsplashHtmlResults(imageDetails);
   }
-
-  $('#results').removeClass('hidden');
-  $('#particles-js').addClass('hidden');
+  showResults();
 }
 
 function watchUnsplashForm() {
@@ -166,13 +170,32 @@ function watchUnsplashForm() {
 }
 
 // !BEHANCE /////////////////////////////////
-// function getUserBehanceSearchTerm() {
-//   return $('#js-behance-search-term').val();
-// }
+function watchBehanceForm() {
+  $('#js-behance-form').submit(event => {
+    event.preventDefault();
+    const query = getUserBehanceSearchTerm();
+    const time = getUserBehanceTimeSelection();
 
-// function getUserBehanceTimeSelection() {
-//   return $('#js-behance-time').val();
-// }
+    getBehanceProjects(query, time);
+    scrollToTop();
+  });
+}
+function getUserBehanceSearchTerm() {
+  return $('#js-behance-search-term').val();
+}
+
+function getUserBehanceTimeSelection() {
+  return $('#js-behance-time').val();
+}
+
+function makeFullUrl(params) {
+  const queryString = formatQueryParams(params);
+  const url = `${configBehance.searchURL}?${queryString}`;
+  const proxyurl = 'https://fathomless-river-91209.herokuapp.com/';
+  const fullUrl = proxyurl + url;
+
+  return fullUrl;
+}
 
 function getBehanceProjects(query, time) {
   const params = {
@@ -180,13 +203,10 @@ function getBehanceProjects(query, time) {
     time,
     api_key: configBehance.apiKey,
   };
-  const queryString = formatQueryParams(params);
-  const url = `${configBehance.searchURL}?${queryString}`;
-  const proxyurl = 'https://fathomless-river-91209.herokuapp.com/';
-  const fullUrl = proxyurl + url;
-  console.log(fullUrl);
 
-  fetch(proxyurl + url)
+  const url = makeFullUrl(params);
+
+  fetch(url)
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -201,18 +221,11 @@ function getBehanceProjects(query, time) {
     });
 }
 
-function displayResultsBehance(responseJson) {
-  let images = responseJson.projects;
+function makeBehanceHtmlResults(imageDetails) {
+  const { imageUrl, artist, project } = imageDetails;
 
-  clearViewer();
-
-  for (let image of images) {
-    let imageUrl = image.covers.original;
-    let artist = image.name;
-    let project = image.url;
-
-    $('#results__list').append(
-      `<li class="results__item">
+  $('#results__list').append(
+    `<li class="results__item">
         <a href="${imageUrl}" target="_blank">
           <img class="results__image" src=${imageUrl} alt="No result">
         </a>
@@ -220,30 +233,59 @@ function displayResultsBehance(responseJson) {
           ${artist}
         </a>
       </li>`
-    );
-  }
-
-  $('#results').removeClass('hidden');
-  $('#particles-js').addClass('hidden');
+  );
 }
 
-function watchBehanceForm() {
-  $('#js-behance-form').submit(event => {
-    event.preventDefault();
-    const query = $('#js-behance-search-term').val();
-    const time = $('#js-behance-time').val();
+function displayResultsBehance(responseJson) {
+  const images = responseJson.projects;
 
-    getBehanceProjects(query, time);
+  clearViewer();
+
+  for (let image of images) {
+    const imageDetails = {
+      imageUrl: image.covers.original,
+      artist: image.name,
+      project: image.url,
+    };
+
+    makeBehanceHtmlResults(imageDetails);
+  }
+  showResults();
+}
+
+//! FONTS ////////////////////////////////////////
+function watchFontsForm() {
+  $('#js-fonts-form').submit(event => {
+    event.preventDefault();
+    const sortBy = getUserFontSortSelection();
+    getGoogleFonts(sortBy);
     scrollToTop();
   });
 }
 
-// !FONTS ////////////////////////////////////////
 function getUserFontSortSelection() {
   return $('#js-fonts-sort').val();
 }
 
+function getUserFontText() {
+  return $('#js-fonts-search-term').val();
+}
+
+function makeCssFontSnippet(fontFamily, fontCategory) {
+  return `font-family: '${fontFamily}', ${fontCategory};`;
+}
+
+function encodeFontFamily(fontFamily) {
+  const encodedFontFamily = fontFamily.split(' ').join('+');
+  return encodedFontFamily;
+}
+
 function makeHtmlFontLink(encodedFontFamily) {
+  const openSansCondensedWeight = `:300`;
+  if (encodedFontFamily === 'Open+Sans+Condensed') {
+    return encodedFontFamily + openSansCondensedWeight;
+  }
+
   return $('head').append(
     `<link href="https://fonts.googleapis.com/css?family=${encodedFontFamily}" rel="stylesheet"/>`
   );
@@ -275,7 +317,7 @@ function getGoogleFonts(sortBy) {
 function makeFontsResultsHtml(fontFamily, fontCategory) {
   return $('#results__list').append(
     `<li class="results__item">
-        <p class="results__font" style="font-family:$   {fontFamily};">${getUserFontText()}
+        <p class="results__font" style="font-family:${fontFamily};">${getUserFontText()}
         </p>
         <span class="results__overlay">
           ${makeCssFontSnippet(fontFamily, fontCategory)}
@@ -298,18 +340,7 @@ function displayResultsGoogleFonts(responseJson) {
     makeHtmlFontLink(encodedFontFamily);
     makeFontsResultsHtml(fontFamily, fontCategory);
   }
-
-  $('#results').removeClass('hidden');
-  $('#particles-js').addClass('hidden');
-}
-
-function watchFontsForm() {
-  $('#js-fonts-form').submit(event => {
-    event.preventDefault();
-    const sortBy = getUserFontSortSelection();
-    getGoogleFonts(sortBy);
-    scrollToTop();
-  });
+  showResults();
 }
 
 function watchForms() {

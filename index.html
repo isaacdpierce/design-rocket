@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Design Rocket</title>
     <link
-      href="https://fonts.googleapis.com/css?family=Roboto:100,400,700"
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,700"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles/normalize.css" />
@@ -42,10 +42,18 @@
           <ul id="results__list" class="results__list"></ul>
         </section>
       </section>
-      <section class="quote-button__container">
-        <button id="js-button__quote" class="button__quote form-styles">
-          Inspirational quote generator
-        </button>
+
+      <section class="quote__row">
+        <div class="quote__container">
+          <label for="quote__button">Inspirational quote generator</label>
+          <button
+            id="js-button__quote"
+            name="quote__button"
+            class="quote__button form-styles"
+          >
+            Fetch
+          </button>
+        </div>
       </section>
       <section class="controllers">
         <form class="form--large form-styles" id="js-behance-form">
@@ -128,7 +136,7 @@
       </section>
     </main>
     <footer>
-      <p>Built by Isaac Pierce copyright 2019</p>
+      <p class="copyright">Built by Isaac Pierce copyright &copy;2019</p>
     </footer>
     <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
