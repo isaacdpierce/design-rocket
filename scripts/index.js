@@ -19,6 +19,12 @@ function scrollToTop() {
   });
 }
 
+function resetForms() {
+  document.getElementById('js-behance-form').reset();
+  document.getElementById('js-unsplash-form').reset();
+  document.getElementById('js-fonts-form').reset();
+}
+
 function getFirst100ArrayItems(array) {
   return array.slice(0, 99);
 }
@@ -29,6 +35,7 @@ function showParticlesBackground() {
 
 function showResults() {
   $('#results').removeClass('hidden');
+  resetForms();
 }
 
 function hideParticlesBackGround() {
