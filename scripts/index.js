@@ -1,5 +1,9 @@
 'use strict';
 
+//! TODO get all console errors
+//! 1. showParticlesBackground is throwing
+//! Change to toggleClass
+
 function formatQueryParams(params) {
   const queryItems = Object.keys(params).map(
     key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
@@ -258,6 +262,27 @@ function displayResultsBehance(responseJson) {
   toggleLoadingAnimation();
   showResults();
 }
+
+// ERROR HANDLING
+// toggleLoadingAnimation();
+// const errorMessage = `<p>Sorry there were no projects for your search - Try another term.</p>`
+
+// if (images.length === 0) {
+//   clearViewer();
+//   showErrorMessage(errorMessage);
+// }
+
+// if (images.length > 0) {
+//   for (let image of images) {
+//     const imageDetails = {
+//       imageUrl: image.covers[404],
+//       artist: image.name,
+//       project: image.url,
+//     };
+//     makeBehanceHtmlResults(imageDetails);
+//   }
+//   showResults();
+// }
 
 function watchFontsForm() {
   $('#js-fonts-form').submit(event => {
