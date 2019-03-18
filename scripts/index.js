@@ -52,7 +52,6 @@ function clearViewer() {
   hideParticlesBackGround();
 }
 
-// ! QUOTES ////////////////////////////////////////
 function watchQuoteButton() {
   $('#js-button__quote').click(event => {
     event.preventDefault();
@@ -101,7 +100,6 @@ function makeQuoteHtml(content, title, link) {
   );
 }
 
-// !UNSPLASH //////////////////////////////////
 function watchUnsplashForm() {
   $('#js-unsplash-form').submit(event => {
     event.preventDefault();
@@ -177,7 +175,6 @@ function displayResultsUnsplash(responseJson) {
   showResults();
 }
 
-// !BEHANCE /////////////////////////////////
 function watchBehanceForm() {
   $('#js-behance-form').submit(event => {
     event.preventDefault();
@@ -256,15 +253,12 @@ function displayResultsBehance(responseJson) {
       artist: image.name,
       project: image.url,
     };
-    console.log(imageDetails.imageUrl);
-
     makeBehanceHtmlResults(imageDetails);
   }
   toggleLoadingAnimation();
   showResults();
 }
 
-//! FONTS ////////////////////////////////////////
 function watchFontsForm() {
   $('#js-fonts-form').submit(event => {
     event.preventDefault();
