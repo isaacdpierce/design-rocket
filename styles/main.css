@@ -358,6 +358,15 @@ button {
 button:focus {
   outline: 0;
 }
+select {
+  display: block;
+}
+input,
+select,
+option {
+  min-width: 100%;
+  margin-top: 1rem;
+}
 
 footer {
   -webkit-box-align: end;
@@ -367,7 +376,7 @@ footer {
   display: -ms-flexbox;
   display: flex;
   grid-column: 1 / -1;
-  height: 20rem;
+  height: 10rem;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -530,6 +539,7 @@ footer {
   max-width: 40rem;
   padding: 4rem 5rem;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .form--large h2 {
@@ -599,8 +609,8 @@ footer {
 .form__button:focus,
 .form__button span:focus,
 .quote__button:focus {
-  -webkit-box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.063);
-  box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.063);
+  -webkit-box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.129);
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.129);
   background-color: rgb(15, 65, 101);
 }
 
@@ -745,5 +755,40 @@ footer {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .form--large {
+    padding: 2rem 3rem;
+    margin: 0 1rem;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .form--large h2 {
+    margin-bottom: 1rem;
+    padding: 1rem 0;
+  }
+
+  .form__button {
+    height: 160px;
+    width: 160px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .controllers {
+    flex-direction: column;
+    align-items: center;
+  }
+  .form--large {
+    margin-bottom: 1rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .viewer {
+    border-radius: 0;
   }
 }
