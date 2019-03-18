@@ -358,9 +358,7 @@ button {
 button:focus {
   outline: 0;
 }
-select {
-  display: block;
-}
+
 input,
 select,
 option {
@@ -588,7 +586,7 @@ footer {
   font-weight: 700;
   height: 180px;
   letter-spacing: 2px;
-  margin-top: 2rem;
+  margin-top: 3rem;
   padding: 1rem;
   position: relative;
   -webkit-transition: all ease-in-out 0.3s;
@@ -744,12 +742,8 @@ footer {
 
 @keyframes spin {
   0% {
-    opacity: 0;
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
-  }
-  10% {
-    opacity: 1;
   }
 
   100% {
