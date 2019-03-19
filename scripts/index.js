@@ -59,7 +59,7 @@ function watchQuoteButton() {
     toggleLoadingAnimation();
     scrollToTop();
     getRandomQuote();
-    showParticlesBackGround();
+    showParticlesBackground();
   });
 }
 
