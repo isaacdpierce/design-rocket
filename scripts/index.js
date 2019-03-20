@@ -1,6 +1,5 @@
 'use strict';
 
-//  TODO FIX loading squashing images with second load of same search
 function formatQueryParams(params) {
   const queryItems = Object.keys(params).map(
     key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
@@ -78,7 +77,7 @@ function getRandomQuote() {
   const queryString = `filter[orderby]=rand&filter[posts_per_page]=1`;
   const url = `${configDesignQuote.searchURL}?${queryString}`;
 
-  fetch(url, { cache: 'no-cache' })
+  fetch(url)
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -284,27 +283,6 @@ function displayResultsBehance(responseJson) {
   }
   showResults();
 }
-
-// ERROR HANDLING
-// toggleLoadingAnimation();
-// const errorMessage = `<p>Sorry there were no projects for your search - Try another term.</p>`
-
-// if (images.length === 0) {
-//   clearViewer();
-//   showErrorMessage(errorMessage);
-// }
-
-// if (images.length > 0) {
-//   for (let image of images) {
-//     const imageDetails = {
-//       imageUrl: image.covers[404],
-//       artist: image.name,
-//       project: image.url,
-//     };
-//     makeBehanceHtmlResults(imageDetails);
-//   }
-//   showResults();
-// }
 
 function watchFontsForm() {
   $('#js-fonts-form').submit(event => {

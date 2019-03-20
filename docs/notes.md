@@ -79,3 +79,4 @@ Behance - <https://www.programmableweb.com/api/behance>
 | As an admin user | I want see all user accounts              |   High   |
 | As an admin user | I want to see user feedback and questions |   High   |
 | As an admin user | I want to see the usage reports           |  Medium  |
+
