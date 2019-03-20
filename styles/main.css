@@ -550,7 +550,8 @@ footer {
   padding: 0;
 }
 
-.results__quote {
+.results__quote,
+.results__error {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -558,6 +559,7 @@ footer {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+  align-items: center;
   width: 100vw;
 }
 

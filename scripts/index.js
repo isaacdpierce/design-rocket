@@ -1,9 +1,6 @@
 'use strict';
 
-//! TODO get all console errors
-//! 1. showParticlesBackground is throwing
-//! Change to toggleClass
-
+//  TODO FIX loading squashing images with second load of same search
 function formatQueryParams(params) {
   const queryItems = Object.keys(params).map(
     key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
@@ -21,6 +18,16 @@ function scrollToTop() {
     left: 0,
     behavior: 'smooth',
   });
+}
+
+function renderError(errorMessage) {
+  $('#results__list').append(
+    `<li class='results__error'>
+      <p id="js-error-message" class="error-message">${errorMessage}</p>
+    </li>`
+  );
+
+  showResults();
 }
 
 function resetForms() {
@@ -42,7 +49,7 @@ function showResults() {
   resetForms();
 }
 
-function hideParticlesBackGround() {
+function hideParticlesBackground() {
   $('#particles-js').addClass('hidden');
 }
 
@@ -53,7 +60,7 @@ function removeResults() {
 
 function clearViewer() {
   removeResults();
-  hideParticlesBackGround();
+  hideParticlesBackground();
 }
 
 function watchQuoteButton() {
@@ -63,7 +70,7 @@ function watchQuoteButton() {
     toggleLoadingAnimation();
     scrollToTop();
     getRandomQuote();
-    showParticlesBackGround();
+    showParticlesBackground();
   });
 }
 
@@ -82,7 +89,8 @@ function getRandomQuote() {
     .then(responseJson => displayResultsQuotes(responseJson))
 
     .catch(err => {
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+      const errorMessage = `Something went wrong: ${err.message}`;
+      renderError(errorMessage);
     });
 }
 
@@ -141,10 +149,18 @@ function getUnsplashImages(query, limit = 10) {
       throw new Error(response.statusText);
     })
 
-    .then(responseJson => displayResultsUnsplash(responseJson))
-
+    .then(responseJson => {
+      const errorMessage = `There were no images for your search`;
+      toggleLoadingAnimation();
+      if (responseJson.results.length > 0) {
+        displayResultsUnsplash(responseJson);
+      } else {
+        renderError(errorMessage);
+      }
+    })
     .catch(err => {
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+      const errorMessage = `Something went wrong: ${err.message}`;
+      renderError(errorMessage);
     });
 }
 
@@ -175,7 +191,6 @@ function displayResultsUnsplash(responseJson) {
 
     makeUnsplashHtmlResults(imageDetails);
   }
-  toggleLoadingAnimation();
   showResults();
 }
 
@@ -224,11 +239,19 @@ function getBehanceProjects(query, time) {
       }
       throw new Error(response.statusText);
     })
-
-    .then(responseJson => displayResultsBehance(responseJson))
+    .then(responseJson => {
+      const errorMessage = `There were no projects for your search`;
+      toggleLoadingAnimation();
+      if (responseJson.projects.length > 0) {
+        displayResultsBehance(responseJson);
+      } else {
+        renderError(errorMessage);
+      }
+    })
 
     .catch(err => {
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+      const errorMessage = `Something went wrong: ${err.message}`;
+      renderError(errorMessage);
     });
 }
 
@@ -259,7 +282,6 @@ function displayResultsBehance(responseJson) {
     };
     makeBehanceHtmlResults(imageDetails);
   }
-  toggleLoadingAnimation();
   showResults();
 }
 
@@ -342,7 +364,8 @@ function getGoogleFonts(sortBy) {
     .then(responseJson => displayResultsGoogleFonts(responseJson))
 
     .catch(err => {
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+      const errorMessage = `Something went wrong: ${err.message}`;
+      renderError(errorMessage);
     });
 }
 
