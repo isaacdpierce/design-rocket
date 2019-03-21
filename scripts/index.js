@@ -77,7 +77,7 @@ function getRandomQuote() {
   const queryString = `filter[orderby]=rand&filter[posts_per_page]=1`;
   const url = `${configDesignQuote.searchURL}?${queryString}`;
 
-  fetch(url)
+  fetch(url, { cache: 'no-cache' })
     .then(response => {
       if (response.ok) {
         return response.json();
