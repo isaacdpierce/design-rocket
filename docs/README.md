@@ -2,10 +2,10 @@
 
 <img src="../images/design-rocket-cover.png"
      alt="Design Rocket Cover"
-     style="float: left; margin-left: 10px; margin-bottom: 10px; width: 500px" />
+     style="float: left; margin-left: 10px; margin-bottom: 10px; width: 500px;" />
 <img src="../images/design-rocket-controllers.png"
      alt="Design Rocket Cover"
-     style="float: left; margin-left: 10px; margin-bottom: 10px; width: 500px" />
+     style="float: left; margin-left: 10px; margin-bottom: 10px; width: 500px;" />
 
 **What is it?**
 
