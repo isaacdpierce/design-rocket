@@ -1,6 +1,6 @@
 :root {
   --brand-color-1: #88e8ed;
-  --brand-color-2: #386895;
+  --brand-color-2https://www.bloc.io/: #386895;
 }
 
 * {
@@ -617,7 +617,7 @@ footer {
   -ms-flex-pack: center;
   justify-content: center;
   opacity: 0;
-  /* padding-top: 9rem; */
+  padding-top: 9rem;
   position: absolute;
   text-shadow: 1px 1px 1px black;
   top: 0;
@@ -861,8 +861,8 @@ footer {
 .loader {
   border: 10px solid rgba(29, 82, 119, 0.084);
   border-radius: 50%;
-  border-top: 10px groove var(--brand-color-2);
-  border-bottom: 10px groove var(--brand-color-2);
+  border-top: 10px groove var(--brand-color-2https://www.bloc.io/);
+  border-bottom: 10px groove var(--brand-color-2https://www.bloc.io/);
   width: 120px;
   height: 120px;
   -webkit-animation: spin 2s linear infinite;
