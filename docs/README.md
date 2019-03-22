@@ -2,18 +2,18 @@
 
 <img src="../images/design-rocket-cover.png"
      alt="Design Rocket Cover"
-     style="float: left; margin-left: 10px; margin-bottom: 10px; height: 300px" />
+     style="float: left; margin-left: 10px; margin-bottom: 10px; width: 500px" />
 <img src="../images/design-rocket-controllers.png"
      alt="Design Rocket Cover"
-     style="float: left; margin-left: 10px; margin-bottom: 10px; height: 300px" />
+     style="float: left; margin-left: 10px; margin-bottom: 10px; width: 500px" />
 
 **What is it?**
 
-A dashboard app that connects to commonly used design tool API's for web development
+A dashboard app that allows users to search and display results from common web development design tools.
 
 **Why does it exist?**
 
-So developers only need to have one browser window open to use many common tools
+So developers only need to have one browser window open to use many common design tools on a clean unified UI.
 
 **What API's does it use?**
 
