@@ -1,8 +1,6 @@
 :root {
   --brand-color-1: #88e8ed;
-  --brand-color-2: #52b3bc;
-  --brand-color-3: #263b7a;
-  --brand-color-4: #386895;
+  --brand-color-2: #386895;
 }
 
 * {
@@ -619,10 +617,11 @@ footer {
   -ms-flex-pack: center;
   justify-content: center;
   opacity: 0;
-  padding-top: 9rem;
+  /* padding-top: 9rem; */
   position: absolute;
   text-shadow: 1px 1px 1px black;
   top: 0;
+
   -webkit-transition: opacity 0.6s ease-in-out;
   -o-transition: opacity 0.6s ease-in-out;
   transition: opacity 0.6s ease-in-out;
@@ -862,8 +861,8 @@ footer {
 .loader {
   border: 10px solid rgba(29, 82, 119, 0.084);
   border-radius: 50%;
-  border-top: 10px groove var(--brand-color-4);
-  border-bottom: 10px groove var(--brand-color-4);
+  border-top: 10px groove var(--brand-color-2);
+  border-bottom: 10px groove var(--brand-color-2);
   width: 120px;
   height: 120px;
   -webkit-animation: spin 2s linear infinite;

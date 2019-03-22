@@ -66,9 +66,8 @@ function watchQuoteButton() {
   $('#js-button__quote').click(event => {
     event.preventDefault();
     clearViewer();
-    toggleLoadingAnimation();
-    scrollToTop();
     getRandomQuote();
+    scrollToTop();
     showParticlesBackground();
   });
 }
@@ -77,6 +76,7 @@ function getRandomQuote() {
   const queryString = `filter[orderby]=rand&filter[posts_per_page]=1`;
   const url = `${configDesignQuote.searchURL}?${queryString}`;
 
+  toggleLoadingAnimation();
   fetch(url, { cache: 'no-cache' })
     .then(response => {
       if (response.ok) {
@@ -94,14 +94,14 @@ function getRandomQuote() {
 }
 
 function displayResultsQuotes(responseJson) {
-  const { content, title, link } = responseJson[0];
-  makeQuoteHtml(content, title, link);
+  makeQuoteHtml(responseJson);
   toggleLoadingAnimation();
   showResults();
   showParticlesBackground();
 }
 
-function makeQuoteHtml(content, title, link) {
+function makeQuoteHtml(responseJson) {
+  const { content, title, link } = responseJson[0];
   $('#results__list').append(
     `<li class='results__quote'>
       <blockquote id='qod-quote'>
@@ -115,9 +115,10 @@ function watchUnsplashForm() {
   $('#js-unsplash-form').submit(event => {
     event.preventDefault();
     clearViewer();
-    toggleLoadingAnimation();
+
     const query = getUserUnsplashSearchTerm();
     const limit = getUserUnsplashMaxResults();
+
     getUnsplashImages(query, limit);
     scrollToTop();
   });
@@ -131,14 +132,21 @@ function getUserUnsplashMaxResults() {
   return $('#js-unsplash-max-results').val();
 }
 
+function makeFullUnsplashUrl(params) {
+  const queryString = formatQueryParams(params);
+  const url = `${configUnsplash.searchURL}?${queryString}`;
+  return url;
+}
+
 function getUnsplashImages(query, limit = 10) {
   const params = {
     per_page: limit,
     query,
     client_id: configUnsplash.apiKey,
   };
-  const queryString = formatQueryParams(params);
-  const url = `${configUnsplash.searchURL}?${queryString}`;
+
+  const url = makeFullUnsplashUrl(params);
+  toggleLoadingAnimation();
 
   fetch(url)
     .then(response => {
@@ -150,7 +158,6 @@ function getUnsplashImages(query, limit = 10) {
 
     .then(responseJson => {
       const errorMessage = `There were no images for your search`;
-      toggleLoadingAnimation();
       if (responseJson.results.length > 0) {
         displayResultsUnsplash(responseJson);
       } else {
@@ -161,6 +168,21 @@ function getUnsplashImages(query, limit = 10) {
       const errorMessage = `Something went wrong: ${err.message}`;
       renderError(errorMessage);
     });
+}
+
+function displayResultsUnsplash(responseJson) {
+  const images = responseJson.results;
+
+  for (let image of images) {
+    const imageDetails = {
+      imageUrl: image.urls.regular,
+      artist: image.user.name,
+      portfolio: image.user.links.html,
+    };
+    makeUnsplashHtmlResults(imageDetails);
+  }
+  toggleLoadingAnimation();
+  showResults();
 }
 
 function makeUnsplashHtmlResults(imageDetails) {
@@ -178,21 +200,6 @@ function makeUnsplashHtmlResults(imageDetails) {
   );
 }
 
-function displayResultsUnsplash(responseJson) {
-  const images = responseJson.results;
-
-  for (let image of images) {
-    const imageDetails = {
-      imageUrl: image.urls.regular,
-      artist: image.user.name,
-      portfolio: image.user.links.html,
-    };
-
-    makeUnsplashHtmlResults(imageDetails);
-  }
-  showResults();
-}
-
 function watchBehanceForm() {
   $('#js-behance-form').submit(event => {
     event.preventDefault();
@@ -200,7 +207,6 @@ function watchBehanceForm() {
     const time = getUserBehanceTimeSelection();
 
     clearViewer();
-    toggleLoadingAnimation();
     getBehanceProjects(query, time);
     scrollToTop();
   });
@@ -213,7 +219,7 @@ function getUserBehanceTimeSelection() {
   return $('#js-behance-time').val();
 }
 
-function makeFullUrl(params) {
+function makeFullBehanceUrl(params) {
   const queryString = formatQueryParams(params);
   const url = `${configBehance.searchURL}?${queryString}`;
   const proxyurl = 'https://fathomless-river-91209.herokuapp.com/';
@@ -229,7 +235,9 @@ function getBehanceProjects(query, time) {
     api_key: configBehance.apiKey,
   };
 
-  const url = makeFullUrl(params);
+  const url = makeFullBehanceUrl(params);
+
+  toggleLoadingAnimation();
 
   fetch(url)
     .then(response => {
