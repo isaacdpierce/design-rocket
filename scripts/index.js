@@ -7,6 +7,13 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
+function handleSubmit(event) {
+  event.preventDefault();
+  clearViewer();
+  toggleLoadingAnimation();
+  scrollToTop();
+}
+
 function toggleLoadingAnimation() {
   $('#js-loader').toggleClass('hidden');
 }
@@ -44,6 +51,7 @@ function showParticlesBackground() {
 }
 
 function showResults() {
+  toggleLoadingAnimation();
   $('#results').removeClass('hidden');
   resetForms();
 }
@@ -76,7 +84,6 @@ function getRandomQuote() {
   const queryString = `filter[orderby]=rand&filter[posts_per_page]=1`;
   const url = `${configDesignQuote.searchURL}?${queryString}`;
 
-  toggleLoadingAnimation();
   fetch(url, { cache: 'no-cache' })
     .then(response => {
       if (response.ok) {
@@ -95,7 +102,6 @@ function getRandomQuote() {
 
 function displayResultsQuotes(responseJson) {
   makeQuoteHtml(responseJson);
-  toggleLoadingAnimation();
   showResults();
   showParticlesBackground();
 }
@@ -113,14 +119,11 @@ function makeQuoteHtml(responseJson) {
 
 function watchUnsplashForm() {
   $('#js-unsplash-form').submit(event => {
-    event.preventDefault();
-    clearViewer();
-
     const query = getUserUnsplashSearchTerm();
     const limit = getUserUnsplashMaxResults();
 
+    handleSubmit(event);
     getUnsplashImages(query, limit);
-    scrollToTop();
   });
 }
 
@@ -146,7 +149,6 @@ function getUnsplashImages(query, limit = 10) {
   };
 
   const url = makeFullUnsplashUrl(params);
-  toggleLoadingAnimation();
 
   fetch(url)
     .then(response => {
@@ -181,7 +183,6 @@ function displayResultsUnsplash(responseJson) {
     };
     makeUnsplashHtmlResults(imageDetails);
   }
-  toggleLoadingAnimation();
   showResults();
 }
 
@@ -202,13 +203,11 @@ function makeUnsplashHtmlResults(imageDetails) {
 
 function watchBehanceForm() {
   $('#js-behance-form').submit(event => {
-    event.preventDefault();
     const query = getUserBehanceSearchTerm();
     const time = getUserBehanceTimeSelection();
 
-    clearViewer();
+    handleSubmit(event);
     getBehanceProjects(query, time);
-    scrollToTop();
   });
 }
 function getUserBehanceSearchTerm() {
@@ -237,8 +236,6 @@ function getBehanceProjects(query, time) {
 
   const url = makeFullBehanceUrl(params);
 
-  toggleLoadingAnimation();
-
   fetch(url)
     .then(response => {
       if (response.ok) {
@@ -248,7 +245,6 @@ function getBehanceProjects(query, time) {
     })
     .then(responseJson => {
       const errorMessage = `There were no projects for your search`;
-      toggleLoadingAnimation();
       if (responseJson.projects.length > 0) {
         displayResultsBehance(responseJson);
       } else {
@@ -294,12 +290,9 @@ function displayResultsBehance(responseJson) {
 
 function watchFontsForm() {
   $('#js-fonts-form').submit(event => {
-    event.preventDefault();
-    clearViewer();
-    toggleLoadingAnimation();
     const sortBy = getUserFontSortSelection();
+    handleSubmit(event);
     getGoogleFonts(sortBy);
-    scrollToTop();
   });
 }
 
@@ -380,7 +373,6 @@ function displayResultsGoogleFonts(responseJson) {
     makeFontsResultsHtml(fontFamily, fontCategory);
   }
   showResults();
-  toggleLoadingAnimation();
 }
 
 function watchForms() {

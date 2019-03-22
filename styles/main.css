@@ -1,6 +1,6 @@
 :root {
   --brand-color-1: #88e8ed;
-  --brand-color-2https://www.bloc.io/: #386895;
+  --brand-color-2: #386895;
 }
 
 * {
@@ -452,6 +452,7 @@ a {
   color: var(--brand-color-1);
   text-decoration: none;
   z-index: 199;
+  display: block;
 }
 
 canvas {
@@ -562,15 +563,6 @@ footer {
 }
 
 .results__item {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 1fr;
-  grid-template-columns: 1fr;
-  -ms-grid-rows: 75vh;
-  grid-template-rows: 75vh;
   margin-right: 1rem;
   position: relative;
 }
@@ -582,6 +574,7 @@ footer {
 
 .results__image {
   cursor: pointer;
+  height: 76vh;
   max-height: 100%;
   min-height: 100%;
 }
@@ -593,13 +586,6 @@ footer {
   width: 45rem;
   min-width: 15rem;
   margin: 0 5rem;
-}
-
-.results__overlay,
-.results__font,
-.results__image {
-  grid-row: 1 / -1;
-  grid-column: 1 / -1;
 }
 
 .results__overlay {
@@ -859,10 +845,10 @@ footer {
 }
 
 .loader {
-  border: 10px solid rgba(29, 82, 119, 0.084);
+  border: 10px solid rgba(31, 96, 143, 0.084);
   border-radius: 50%;
-  border-top: 10px groove var(--brand-color-2https://www.bloc.io/);
-  border-bottom: 10px groove var(--brand-color-2https://www.bloc.io/);
+  border-top: 10px groove var(--brand-color-2);
+  border-bottom: 10px groove var(--brand-color-2);
   width: 120px;
   height: 120px;
   -webkit-animation: spin 2s linear infinite;
