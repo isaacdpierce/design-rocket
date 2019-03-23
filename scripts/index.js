@@ -71,12 +71,9 @@ function clearViewer() {
 }
 
 function watchQuoteButton() {
-  $('#js-button__quote').click(event => {
-    event.preventDefault();
-    clearViewer();
+  $('#js-quote-form').submit(event => {
+    handleSubmit(event);
     getRandomQuote();
-    scrollToTop();
-    showParticlesBackground();
   });
 }
 
@@ -376,6 +373,10 @@ function displayResultsGoogleFonts(responseJson) {
 }
 
 function watchForms() {
+  $(document).on('submit', event => {
+    const eventTarget = event.target.id;
+    console.log(eventTarget);
+  });
   watchUnsplashForm();
   watchBehanceForm();
   watchFontsForm();

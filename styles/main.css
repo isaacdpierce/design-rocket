@@ -581,8 +581,11 @@ footer {
 
 .results__font {
   font-size: 6rem;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   word-wrap: break-word;
+  height: 100%;
   width: 45rem;
   min-width: 15rem;
   margin: 0 5rem;
