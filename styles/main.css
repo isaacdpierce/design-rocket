@@ -531,6 +531,9 @@ footer {
 }
 
 .results {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   will-change: scroll-position;
   -webkit-overflow-scrolling: touch;
   height: 76vh;
