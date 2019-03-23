@@ -9,13 +9,25 @@ function formatQueryParams(params) {
 
 function handleSubmit(event) {
   event.preventDefault();
-  clearViewer();
-  toggleLoadingAnimation();
+  hideParticlesBackground();
+  showLoader();
   scrollToTop();
 }
 
-function toggleLoadingAnimation() {
-  $('#js-loader').toggleClass('hidden');
+function hideParticlesBackground() {
+  $('#particles-js').addClass('hidden');
+}
+
+function showParticlesBackground() {
+  $('#particles-js').removeClass('hidden');
+}
+
+function showLoader() {
+  $('#results__list').html(
+    `<li class='results__loader'>
+      <div id="js-loader" class="loader"></div>
+    </li>`
+  );
 }
 
 function scrollToTop() {
@@ -27,13 +39,11 @@ function scrollToTop() {
 }
 
 function renderError(errorMessage) {
-  $('#results__list').append(
+  $('#results__list').html(
     `<li class='results__error'>
       <p id="js-error-message" class="error-message">${errorMessage}</p>
     </li>`
   );
-
-  showResults();
 }
 
 function resetForms() {
@@ -46,38 +56,7 @@ function getFirst100ArrayItems(array) {
   return array.slice(0, 99);
 }
 
-function showParticlesBackground() {
-  $('#particles-js').removeClass('hidden');
-}
-
-function showResults() {
-  toggleLoadingAnimation();
-  $('#results').removeClass('hidden');
-  resetForms();
-}
-
-function hideParticlesBackground() {
-  $('#particles-js').addClass('hidden');
-}
-
-function removeResults() {
-  $('#results').addClass('hidden');
-  $('#results__list').empty();
-}
-
-function clearViewer() {
-  removeResults();
-  hideParticlesBackground();
-}
-
-function watchQuoteButton() {
-  $('#js-quote-form').submit(event => {
-    handleSubmit(event);
-    getRandomQuote();
-  });
-}
-
-function getRandomQuote() {
+function handleQuoteForm() {
   const queryString = `filter[orderby]=rand&filter[posts_per_page]=1`;
   const url = `${configDesignQuote.searchURL}?${queryString}`;
 
@@ -99,13 +78,12 @@ function getRandomQuote() {
 
 function displayResultsQuotes(responseJson) {
   makeQuoteHtml(responseJson);
-  showResults();
   showParticlesBackground();
 }
 
 function makeQuoteHtml(responseJson) {
   const { content, title, link } = responseJson[0];
-  $('#results__list').append(
+  $('#results__list').html(
     `<li class='results__quote'>
       <blockquote id='qod-quote'>
         ${content} <a href='${link}'>&mdash; ${title}</a>
@@ -114,28 +92,11 @@ function makeQuoteHtml(responseJson) {
   );
 }
 
-function watchUnsplashForm() {
-  $('#js-unsplash-form').submit(event => {
-    const query = getUserUnsplashSearchTerm();
-    const limit = getUserUnsplashMaxResults();
+function handleUnsplashForm() {
+  const query = getUserUnsplashSearchTerm();
+  const limit = getUserUnsplashMaxResults();
 
-    handleSubmit(event);
-    getUnsplashImages(query, limit);
-  });
-}
-
-function getUserUnsplashSearchTerm() {
-  return $('#js-unsplash-search-term').val();
-}
-
-function getUserUnsplashMaxResults() {
-  return $('#js-unsplash-max-results').val();
-}
-
-function makeFullUnsplashUrl(params) {
-  const queryString = formatQueryParams(params);
-  const url = `${configUnsplash.searchURL}?${queryString}`;
-  return url;
+  getUnsplashImages(query, limit);
 }
 
 function getUnsplashImages(query, limit = 10) {
@@ -172,56 +133,54 @@ function getUnsplashImages(query, limit = 10) {
 function displayResultsUnsplash(responseJson) {
   const images = responseJson.results;
 
-  for (let image of images) {
+  const unsplashResults = images.map(image => {
     const imageDetails = {
       imageUrl: image.urls.regular,
       artist: image.user.name,
       portfolio: image.user.links.html,
     };
-    makeUnsplashHtmlResults(imageDetails);
-  }
-  showResults();
+    return makeUnsplashImageHtml(imageDetails);
+  });
+  addUnsplashResultsToDOM(unsplashResults);
 }
 
-function makeUnsplashHtmlResults(imageDetails) {
+function addUnsplashResultsToDOM(unsplashResults) {
+  $('#results__list').html(unsplashResults);
+  resetForms();
+}
+
+function getUserUnsplashSearchTerm() {
+  return $('#js-unsplash-search-term').val();
+}
+
+function getUserUnsplashMaxResults() {
+  return $('#js-unsplash-max-results').val();
+}
+
+function makeFullUnsplashUrl(params) {
+  const queryString = formatQueryParams(params);
+  const url = `${configUnsplash.searchURL}?${queryString}`;
+  return url;
+}
+
+function makeUnsplashImageHtml(imageDetails) {
   const { imageUrl, portfolio, artist } = imageDetails;
 
-  return $('#results__list').append(
-    `<li class="results__item">        
+  return `<li class="results__item">        
       <a href="${imageUrl}" target="_blank">
         <img class="results__image" src=${imageUrl} alt="No result">
       </a>
       <a class="results__overlay" href=${portfolio} target="_blank">
         ${artist}
       </a>
-    </li>`
-  );
+    </li>`;
 }
 
-function watchBehanceForm() {
-  $('#js-behance-form').submit(event => {
-    const query = getUserBehanceSearchTerm();
-    const time = getUserBehanceTimeSelection();
+function handleBehanceForm() {
+  const query = getUserBehanceSearchTerm();
+  const time = getUserBehanceTimeSelection();
 
-    handleSubmit(event);
-    getBehanceProjects(query, time);
-  });
-}
-function getUserBehanceSearchTerm() {
-  return $('#js-behance-search-term').val();
-}
-
-function getUserBehanceTimeSelection() {
-  return $('#js-behance-time').val();
-}
-
-function makeFullBehanceUrl(params) {
-  const queryString = formatQueryParams(params);
-  const url = `${configBehance.searchURL}?${queryString}`;
-  const proxyurl = 'https://fathomless-river-91209.herokuapp.com/';
-  const fullUrl = proxyurl + url;
-
-  return fullUrl;
+  getBehanceProjects(query, time);
 }
 
 function getBehanceProjects(query, time) {
@@ -255,42 +214,56 @@ function getBehanceProjects(query, time) {
     });
 }
 
-function makeBehanceHtmlResults(imageDetails) {
-  const { imageUrl, artist, project } = imageDetails;
-
-  $('#results__list').append(
-    `<li class="results__item">
-        <a href="${imageUrl}" target="_blank">
-          <img class="results__image" src=${imageUrl} alt="No result">
-        </a>
-        <a class="results__overlay" href=${project} target="_blank">
-          ${artist}
-        </a>
-      </li>`
-  );
-}
-
 function displayResultsBehance(responseJson) {
   const images = responseJson.projects;
-  const imageNumber = '404';
 
-  for (let image of images) {
+  const behanceResultsList = images.map(image => {
     const imageDetails = {
       imageUrl: image.covers[404],
       artist: image.name,
       project: image.url,
     };
-    makeBehanceHtmlResults(imageDetails);
-  }
-  showResults();
+    return makeBehanceImageHtml(imageDetails);
+  });
+  addBehanceResultsToDOM(behanceResultsList);
 }
 
-function watchFontsForm() {
-  $('#js-fonts-form').submit(event => {
-    const sortBy = getUserFontSortSelection();
-    handleSubmit(event);
-    getGoogleFonts(sortBy);
-  });
+function addBehanceResultsToDOM(behanceResultsList) {
+  $('#results__list').html(behanceResultsList);
+}
+
+function getUserBehanceSearchTerm() {
+  return $('#js-behance-search-term').val();
+}
+
+function getUserBehanceTimeSelection() {
+  return $('#js-behance-time').val();
+}
+
+function makeFullBehanceUrl(params) {
+  const queryString = formatQueryParams(params);
+  const url = `${configBehance.searchURL}?${queryString}`;
+  const proxyurl = 'https://fathomless-river-91209.herokuapp.com/';
+  const fullUrl = proxyurl + url;
+
+  return fullUrl;
+}
+
+function makeBehanceImageHtml(imageDetails) {
+  const { imageUrl, artist, project } = imageDetails;
+  return `<li class="results__item">
+    <a href="${imageUrl}" target="_blank">
+      <img class="results__image" src=${imageUrl} alt="No result">
+    </a>
+    <a class="results__overlay" href=${project} target="_blank">
+      ${artist}
+    </a>
+  </li>`;
+}
+
+function handleFontsForm() {
+  const sortBy = getUserFontSortSelection();
+  getGoogleFonts(sortBy);
 }
 
 function getUserFontSortSelection() {
@@ -317,7 +290,7 @@ function makeHtmlFontLink(encodedFontFamily) {
   }
 
   return $('head').append(
-    `<link href="https://fonts.googleapis.com/css?family=${encodedFontFamily}" rel="stylesheet"/>`
+    `<link href="https://fonts.googleapis.com/css?family=${encodedFontFamily}" rel="stylesheet" type="text/css"/>`
   );
 }
 
@@ -345,42 +318,66 @@ function getGoogleFonts(sortBy) {
     });
 }
 
-function makeFontsResultsHtml(fontFamily, fontCategory) {
-  return $('#results__list').append(
-    `<li class="results__item">
-        <p class="results__font" style="font-family:${fontFamily};">${getUserFontText()}
+function makeFontHtml(fontFamily, fontCategory) {
+  const userFontText = getUserFontText();
+
+  return `<li class="results__item">
+        <p class="results__font" style="font-family:${fontFamily};">
+          ${userFontText}
         </p>
         <span class="results__overlay">
           ${makeCssFontSnippet(fontFamily, fontCategory)}
         </span>
-      </li>`
-  );
+      </li>`;
 }
 
 function displayResultsGoogleFonts(responseJson) {
   const fonts = responseJson.items;
   const top100Fonts = getFirst100ArrayItems(fonts);
 
-  for (let font of top100Fonts) {
+  const fontResultsList = top100Fonts.map(font => {
     const fontFamily = font.family;
     const fontCategory = font.category;
     const encodedFontFamily = encodeFontFamily(fontFamily);
 
     makeHtmlFontLink(encodedFontFamily);
-    makeFontsResultsHtml(fontFamily, fontCategory);
-  }
-  showResults();
+    return makeFontHtml(fontFamily, fontCategory);
+  });
+  addGoogleFontResultsToDOM(fontResultsList);
+}
+
+function addGoogleFontResultsToDOM(fontResultsList) {
+  $('#results__list').html(fontResultsList);
 }
 
 function watchForms() {
   $(document).on('submit', event => {
     const eventTarget = event.target.id;
-    console.log(eventTarget);
+
+    handleSubmit(event);
+
+    switch (eventTarget) {
+      case 'js-quote-form': {
+        handleQuoteForm();
+        break;
+      }
+
+      case 'js-fonts-form': {
+        handleFontsForm();
+        break;
+      }
+
+      case 'js-unsplash-form': {
+        handleUnsplashForm();
+        break;
+      }
+
+      case 'js-behance-form': {
+        handleBehanceForm();
+      }
+    }
+    // resetForms();
   });
-  watchUnsplashForm();
-  watchBehanceForm();
-  watchFontsForm();
-  watchQuoteButton();
 }
 
 $(watchForms);
