@@ -261,9 +261,13 @@ function makeBehanceImageHtml(imageDetails) {
   </li>`;
 }
 
+//! FONTS //////////////////////////////////////////
 function handleFontsForm() {
-  const sortBy = getUserFontSortSelection();
-  getGoogleFonts(sortBy);
+  const userInput = {
+    userFontText: getUserFontText(),
+    sortBy: getUserFontSortSelection(),
+  };
+  getGoogleFonts(userInput);
 }
 
 function getUserFontSortSelection() {
@@ -274,8 +278,75 @@ function getUserFontText() {
   return $('#js-fonts-search-term').val();
 }
 
-function makeCssFontSnippet(fontFamily, fontCategory) {
-  return `font-family: '${fontFamily}', ${fontCategory};`;
+function getGoogleFonts(userInput) {
+  const { sortBy, userFontText } = userInput;
+  const params = {
+    sort: sortBy,
+    key: configGoogleFonts.apiKey,
+  };
+  const queryString = formatQueryParams(params);
+  const url = `${configGoogleFonts.searchURL}?${queryString}`;
+
+  fetch(url)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.statusText);
+    })
+
+    .then(responseJson => displayResultsGoogleFonts(responseJson, userFontText))
+
+    .catch(err => {
+      const errorMessage = `Something went wrong: ${err.message}`;
+      renderError(errorMessage);
+    });
+}
+
+function displayResultsGoogleFonts(responseJson, userFontText) {
+  const fonts = responseJson.items;
+  const top100Fonts = getFirst100ArrayItems(fonts);
+  const fontResultsList = makeFontTextResultsList(top100Fonts, userFontText);
+
+  addGoogleFontResultsToDOM(fontResultsList);
+}
+
+function makeFontTextResultsList(top100Fonts, userFontText) {
+  const fontResultsList = top100Fonts.map(font => {
+    const { family, category } = font;
+    const fontDetails = {
+      family,
+      category,
+      userFontText,
+      cssSnippet: `<span class="results__overlay">
+          ${makeCssFontSnippet(family, category)}
+        </span>`,
+    };
+    const encodedFontFamily = encodeFontFamily(family);
+
+    makeHtmlFontLink(encodedFontFamily);
+    return makeFontHtml(fontDetails);
+  });
+  return fontResultsList;
+}
+
+function makeFontHtml(fontDetails) {
+  const { userFontText, family, cssSnippet } = fontDetails;
+
+  return `<li class="results__item">
+        <p class="results__font" style="font-family:${family};">
+          ${userFontText}
+        </p>
+        ${cssSnippet}
+      </li>`;
+}
+
+function addGoogleFontResultsToDOM(fontResultsList) {
+  $('#results__list').html(fontResultsList);
+}
+
+function makeCssFontSnippet(family, category) {
+  return `font-family: '${family}', ${category};`;
 }
 
 function encodeFontFamily(fontFamily) {
@@ -292,62 +363,6 @@ function makeHtmlFontLink(encodedFontFamily) {
   return $('head').append(
     `<link href="https://fonts.googleapis.com/css?family=${encodedFontFamily}" rel="stylesheet" type="text/css"/>`
   );
-}
-
-function getGoogleFonts(sortBy) {
-  const params = {
-    sort: sortBy,
-    key: configGoogleFonts.apiKey,
-  };
-  const queryString = formatQueryParams(params);
-  const url = `${configGoogleFonts.searchURL}?${queryString}`;
-
-  fetch(url)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.statusText);
-    })
-
-    .then(responseJson => displayResultsGoogleFonts(responseJson))
-
-    .catch(err => {
-      const errorMessage = `Something went wrong: ${err.message}`;
-      renderError(errorMessage);
-    });
-}
-
-function makeFontHtml(fontFamily, fontCategory) {
-  const userFontText = getUserFontText();
-
-  return `<li class="results__item">
-        <p class="results__font" style="font-family:${fontFamily};">
-          ${userFontText}
-        </p>
-        <span class="results__overlay">
-          ${makeCssFontSnippet(fontFamily, fontCategory)}
-        </span>
-      </li>`;
-}
-
-function displayResultsGoogleFonts(responseJson) {
-  const fonts = responseJson.items;
-  const top100Fonts = getFirst100ArrayItems(fonts);
-
-  const fontResultsList = top100Fonts.map(font => {
-    const fontFamily = font.family;
-    const fontCategory = font.category;
-    const encodedFontFamily = encodeFontFamily(fontFamily);
-
-    makeHtmlFontLink(encodedFontFamily);
-    return makeFontHtml(fontFamily, fontCategory);
-  });
-  addGoogleFontResultsToDOM(fontResultsList);
-}
-
-function addGoogleFontResultsToDOM(fontResultsList) {
-  $('#results__list').html(fontResultsList);
 }
 
 function watchForms() {
@@ -376,7 +391,7 @@ function watchForms() {
         handleBehanceForm();
       }
     }
-    // resetForms();
+    resetForms();
   });
 }
 
