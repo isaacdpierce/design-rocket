@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  
+
     <link rel="shortcut icon" type="image/png" href="images/rocketicon.png" />
     <link
       href="https://fonts.googleapis.com/css?family=Roboto:100,300,700"
@@ -23,10 +22,8 @@
   </head>
 
   <body>
-    
     <header>
-      
-      <img class="logo" src="images/rocket.svg" alt="rocket logo"></img>
+      <img class="logo" src="images/rocket.svg" alt="rocket logo" />
 
       <h1>Design Rocket</h1>
     </header>
@@ -36,95 +33,132 @@
         <div id="particles-js"></div>
 
         <section id="results" class="results">
-          <ul id="results__list" class="results__list"></ul>
+          <ul
+            id="results__list"
+            class="results__list"
+            role="region"
+            aria-live="polite"
+          ></ul>
         </section>
       </section>
 
       <section class="quote__row">
-          <form class="quote__container" id="js_quote_form">
-            <label for="js-button__quote">Inspirational quote generator</label>
-            <button id="js-button__quote" name="quote__button" class="quote__button">
-              Push
-            </button>
-          </form>
+        <form class="quote__container" id="js_quote_form">
+          <label for="js-button__quote">Inspirational quote generator</label>
+          <button
+            id="js-button__quote"
+            name="quote__button"
+            class="quote__button"
+            role="button"
+            aria-controls="results__list"
+          >
+            GO
+          </button>
+        </form>
       </section>
       <section class="controllers">
         <form class="form--large" id="js_behance_form">
           <h2>Get inspired</h2>
           <p>
-            <label for="js-behance-search-term">Search</label>
+            <label for="js-behance-search-term">Search Behance Projects</label>
             <input
               type="text"
               name="behance-search-term"
               id="js-behance-search-term"
               placeholder="rhino"
+              aria-controls="results__list"
               required
             />
           </p>
 
-          
+          <p>
             <label for="js-behance-time">Time</label>
-            <select id="js-behance-time" name="behance-time">
+            <select aria-controls="results__list">
               <option value="all">all</option>
               <option value="today">today</option>
               <option value="week">past week</option>
               <option value="month">past month</option>
             </select>
-         
-
-          <button class="form__button" type="submit"><span>Push</span></button>
+          </p>
+          <button
+            class="form__button"
+            type="submit"
+            role="button"
+            aria-controls="results__list"
+          >
+            <span>GO</span>
+          </button>
         </form>
 
         <form class="form--large" id="js_unsplash_form">
           <h2>Get images</h2>
           <p>
-            <label for="js-unsplash-search-term">Search</label>
+            <label for="js-unsplash-search-term">Search Unsplash Images</label>
             <input
               type="text"
               name="unsplash-search-term"
               id="js-unsplash-search-term"
               placeholder="fish"
+              aria-controls="results__list"
               required
             />
           </p>
 
-        
+          <p>
             <label for="js-unsplash-max-results">Amount</label>
             <input
               type="number"
               name="unsplash-max-results"
               id="js-unsplash-max-results"
+              aria-controls="results__list"
               value="10"
             />
-        
+          </p>
 
-          <button class="form__button" type="submit"><span>Push</span></button>
+          <button
+            class="form__button"
+            type="submit"
+            role="button"
+            aria-controls="results__list"
+          >
+            <span>GO</span>
+          </button>
         </form>
 
         <form class="form--large" id="js_fonts_form">
           <h2>Get Fonts</h2>
           <p>
-            <label for="js-fonts-search-term">Search</label>
+            <label for="js-fonts-search-term">Sample Google Fonts</label>
             <input
               type="text"
               name="fonts-search-term"
               id="js-fonts-search-term"
               placeholder="Enter sample text"
               maxlength="60"
+              aria-controls="results__list"
               required
             />
           </p>
-
-         
+          <p>
             <label for="js-fonts-sort">Sort</label>
-            <select id="js-fonts-sort" name="fonts-sort">
+            <select
+              id="js-fonts-sort"
+              name="fonts-sort"
+              aria-controls="results__list"
+            >
               <option value="popularity">100 most popular</option>
               <option value="trending">100 top trending</option>
               <option value="date">100 newest</option>
             </select>
-         
-
-          <button class="form__button" type="submit"><span>Push</span></button>
+          </p>
+          <button
+            class="form__button"
+            type="submit"
+            role="button"
+            aria-controls="results__list"
+          >
+            <span>GO</span>
+          </button>
         </form>
       </section>
     </main>

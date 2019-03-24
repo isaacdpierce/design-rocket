@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  background: url(../images/assault.png) rgb(24, 24, 24);
+  background: url(../images/assault.png) #303030;
   color: rgb(198, 198, 198);
   display: -ms-grid;
   display: grid;
@@ -425,7 +425,7 @@ blockquote {
   font-size: 2.5rem;
   max-width: 60rem;
   padding: 2rem;
-  text-shadow: 1px 1px 1px black;
+  text-shadow: 1px 1px 1px #000000;
 }
 
 h1,
@@ -433,10 +433,11 @@ h2 {
   letter-spacing: 2.5px;
   margin: 0;
   text-transform: uppercase;
+  text-shadow: 1px 1px 1px #131313;
 }
 
 h2 {
-  color: rgba(0, 0, 0, 0.659);
+  color: rgb(24, 24, 24);
   font-weight: 700;
   text-shadow: 1px 1px rgb(62, 62, 62);
 }
@@ -460,6 +461,7 @@ canvas {
 
 label {
   margin-right: 1rem;
+  text-shadow: 1px 1px 1px rgb(21, 21, 21);
 }
 
 input[type='text'],
@@ -649,6 +651,10 @@ footer {
   text-align: center;
 }
 
+.form--large p {
+  width: 100%;
+}
+
 .form--large h2 {
   margin-bottom: 2rem;
   text-align: center;
@@ -734,7 +740,7 @@ footer {
 .quote__button:focus {
   -webkit-box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.129);
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.129);
-  background-color: rgb(15, 65, 101);
+  background-color: rgb(11, 45, 70);
 }
 
 .form__button span,
@@ -746,7 +752,7 @@ footer {
 .form--large h2,
 .form--large,
 .quote__row {
-  background-color: rgba(255, 255, 255, 0.036);
+  background-color: rgba(255, 255, 255, 0.022);
 }
 
 .form--large h2,
@@ -832,7 +838,7 @@ footer {
 }
 
 .copyright {
-  color: rgb(82, 82, 82);
+  color: rgb(113, 113, 113);
   padding-bottom: 2rem;
 }
 
