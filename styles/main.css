@@ -172,7 +172,6 @@ main {
   display: grid;
   grid-column: 1 / -1;
   grid-row: 2 / -1;
-  -ms-grid-columns: (1fr) [12];
   grid-template-columns: repeat(12, 1fr);
   -ms-grid-rows: 91vh 1fr;
   grid-template-rows: 91vh 1fr;
@@ -553,7 +552,8 @@ footer {
 }
 
 .results__quote,
-.results__error {
+.results__error,
+.results__loader {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -568,11 +568,6 @@ footer {
 .results__item {
   margin-right: 1rem;
   position: relative;
-}
-
-.results__item > *:nth-child(1) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 1;
 }
 
 .results__image {

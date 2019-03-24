@@ -35,15 +35,14 @@
       <section class="viewer">
         <div id="particles-js"></div>
 
-        <div id="js-loader" class="loader hidden"></div>
-        <section id="results" class="results hidden">
+        <section id="results" class="results">
           <ul id="results__list" class="results__list"></ul>
         </section>
       </section>
 
       <section class="quote__row">
           <form class="quote__container" id="js-quote-form">
-            <label for="quote__button">Inspirational quote generator</label>
+            <label for="js-button__quote">Inspirational quote generator</label>
             <button id="js-button__quote" name="quote__button" class="quote__button">
               Push
             </button>
@@ -53,10 +52,10 @@
         <form class="form--large" id="js-behance-form">
           <h2>Get inspired</h2>
           <p>
-            <label for="search-term">Search</label>
+            <label for="js-behance-search-term">Search</label>
             <input
               type="text"
-              name="search-term"
+              name="behance-search-term"
               id="js-behance-search-term"
               placeholder="rhino"
               required
@@ -64,8 +63,8 @@
           </p>
 
           
-            <label for="time-results">Time</label>
-            <select id="js-behance-time" name="time-results">
+            <label for="js-behance-time">Time</label>
+            <select id="js-behance-time" name="behance-time">
               <option value="all">all</option>
               <option value="today">today</option>
               <option value="week">past week</option>
@@ -79,10 +78,10 @@
         <form class="form--large" id="js-unsplash-form">
           <h2>Get images</h2>
           <p>
-            <label for="search-term">Search</label>
+            <label for="js-unsplash-search-term">Search</label>
             <input
               type="text"
-              name="search-term"
+              name="unsplash-search-term"
               id="js-unsplash-search-term"
               placeholder="fish"
               required
@@ -90,10 +89,10 @@
           </p>
 
         
-            <label for="max-results">Amount</label>
+            <label for="js-unsplash-max-results">Amount</label>
             <input
               type="number"
-              name="max-results"
+              name="unsplash-max-results"
               id="js-unsplash-max-results"
               value="10"
             />
@@ -105,10 +104,10 @@
         <form class="form--large" id="js-fonts-form">
           <h2>Get Fonts</h2>
           <p>
-            <label for="search-term">Search</label>
+            <label for="js-fonts-search-term">Search</label>
             <input
               type="text"
-              name="search-term"
+              name="fonts-search-term"
               id="js-fonts-search-term"
               placeholder="Enter sample text"
               maxlength="60"
@@ -117,7 +116,7 @@
           </p>
 
          
-            <label for="fonts-sort">Sort</label>
+            <label for="js-fonts-sort">Sort</label>
             <select id="js-fonts-sort" name="fonts-sort">
               <option value="popularity">100 most popular</option>
               <option value="trending">100 top trending</option>
