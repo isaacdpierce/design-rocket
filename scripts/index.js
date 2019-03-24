@@ -47,9 +47,9 @@ function renderError(errorMessage) {
 }
 
 function resetForms() {
-  document.getElementById('js-behance-form').reset();
-  document.getElementById('js-unsplash-form').reset();
-  document.getElementById('js-fonts-form').reset();
+  document.getElementById('js_behance_form').reset();
+  document.getElementById('js_unsplash_form').reset();
+  document.getElementById('js_fonts_form').reset();
 }
 
 function getFirst100ArrayItems(array) {
@@ -261,7 +261,6 @@ function makeBehanceImageHtml(imageDetails) {
   </li>`;
 }
 
-//! FONTS //////////////////////////////////////////
 function handleFontsForm() {
   const userInput = {
     userFontText: getUserFontText(),
@@ -365,32 +364,24 @@ function makeHtmlFontLink(encodedFontFamily) {
   );
 }
 
+function handleForm(eventTarget) {
+  const formHandlers = {
+    js_quote_form: handleQuoteForm,
+    js_fonts_form: handleFontsForm,
+    js_unsplash_form: handleUnsplashForm,
+    js_behance_form: handleBehanceForm,
+  };
+
+  formHandlers[eventTarget]();
+}
+
 function watchForms() {
   $(document).on('submit', event => {
     const eventTarget = event.target.id;
 
     handleSubmit(event);
+    handleForm(eventTarget);
 
-    switch (eventTarget) {
-      case 'js-quote-form': {
-        handleQuoteForm();
-        break;
-      }
-
-      case 'js-fonts-form': {
-        handleFontsForm();
-        break;
-      }
-
-      case 'js-unsplash-form': {
-        handleUnsplashForm();
-        break;
-      }
-
-      case 'js-behance-form': {
-        handleBehanceForm();
-      }
-    }
     resetForms();
   });
 }
