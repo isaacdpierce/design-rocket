@@ -46,14 +46,14 @@ function renderError(errorMessage) {
   );
 }
 
-function resetForms() {
-  document.getElementById('js-behance-form').reset();
-  document.getElementById('js-unsplash-form').reset();
-  document.getElementById('js-fonts-form').reset();
-}
-
 function getFirst100ArrayItems(array) {
   return array.slice(0, 99);
+}
+
+function resetForms() {
+  document.getElementById('js_behance_form').reset();
+  document.getElementById('js_unsplash_form').reset();
+  document.getElementById('js_fonts_form').reset();
 }
 
 function handleQuoteForm() {
@@ -167,13 +167,13 @@ function makeUnsplashImageHtml(imageDetails) {
   const { imageUrl, portfolio, artist } = imageDetails;
 
   return `<li class="results__item">        
-      <a href="${imageUrl}" target="_blank">
-        <img class="results__image" src=${imageUrl} alt="No result">
-      </a>
-      <a class="results__overlay" href=${portfolio} target="_blank">
-        ${artist}
-      </a>
-    </li>`;
+            <a href="${imageUrl}" target="_blank">
+              <img class="results__image" src=${imageUrl} alt="No result">
+            </a>
+            <a class="results__overlay" href=${portfolio} target="_blank">
+              ${artist}
+            </a>
+          </li>`;
 }
 
 function handleBehanceForm() {
@@ -230,6 +230,7 @@ function displayResultsBehance(responseJson) {
 
 function addBehanceResultsToDOM(behanceResultsList) {
   $('#results__list').html(behanceResultsList);
+  resetForms();
 }
 
 function getUserBehanceSearchTerm() {
@@ -252,22 +253,18 @@ function makeFullBehanceUrl(params) {
 function makeBehanceImageHtml(imageDetails) {
   const { imageUrl, artist, project } = imageDetails;
   return `<li class="results__item">
-    <a href="${imageUrl}" target="_blank">
-      <img class="results__image" src=${imageUrl} alt="No result">
-    </a>
-    <a class="results__overlay" href=${project} target="_blank">
-      ${artist}
-    </a>
-  </li>`;
+            <a href="${imageUrl}" target="_blank">
+              <img class="results__image" src=${imageUrl} alt="No result">
+            </a>
+            <a class="results__overlay" href=${project} target="_blank">
+              ${artist}
+            </a>
+          </li>`;
 }
 
-//! FONTS //////////////////////////////////////////
 function handleFontsForm() {
-  const userInput = {
-    userFontText: getUserFontText(),
-    sortBy: getUserFontSortSelection(),
-  };
-  getGoogleFonts(userInput);
+  const sortBy = getUserFontSortSelection();
+  getGoogleFonts(sortBy);
 }
 
 function getUserFontSortSelection() {
@@ -278,8 +275,7 @@ function getUserFontText() {
   return $('#js-fonts-search-term').val();
 }
 
-function getGoogleFonts(userInput) {
-  const { sortBy, userFontText } = userInput;
+function getGoogleFonts(sortBy) {
   const params = {
     sort: sortBy,
     key: configGoogleFonts.apiKey,
@@ -295,7 +291,7 @@ function getGoogleFonts(userInput) {
       throw new Error(response.statusText);
     })
 
-    .then(responseJson => displayResultsGoogleFonts(responseJson, userFontText))
+    .then(responseJson => displayResultsGoogleFonts(responseJson))
 
     .catch(err => {
       const errorMessage = `Something went wrong: ${err.message}`;
@@ -303,21 +299,22 @@ function getGoogleFonts(userInput) {
     });
 }
 
-function displayResultsGoogleFonts(responseJson, userFontText) {
+function displayResultsGoogleFonts(responseJson) {
   const fonts = responseJson.items;
+
   const top100Fonts = getFirst100ArrayItems(fonts);
-  const fontResultsList = makeFontTextResultsList(top100Fonts, userFontText);
+
+  const fontResultsList = makeFontTextResultsList(top100Fonts);
 
   addGoogleFontResultsToDOM(fontResultsList);
 }
 
-function makeFontTextResultsList(top100Fonts, userFontText) {
+function makeFontTextResultsList(top100Fonts) {
   const fontResultsList = top100Fonts.map(font => {
     const { family, category } = font;
     const fontDetails = {
       family,
       category,
-      userFontText,
       cssSnippet: `<span class="results__overlay">
           ${makeCssFontSnippet(family, category)}
         </span>`,
@@ -331,18 +328,20 @@ function makeFontTextResultsList(top100Fonts, userFontText) {
 }
 
 function makeFontHtml(fontDetails) {
-  const { userFontText, family, cssSnippet } = fontDetails;
+  const { family, cssSnippet } = fontDetails;
+  const userFontText = getUserFontText();
 
   return `<li class="results__item">
-        <p class="results__font" style="font-family:${family};">
-          ${userFontText}
-        </p>
-        ${cssSnippet}
-      </li>`;
+            <p class="results__font" style="font-family:${family};">
+              ${userFontText}
+            </p>
+            ${cssSnippet}
+          </li>`;
 }
 
 function addGoogleFontResultsToDOM(fontResultsList) {
   $('#results__list').html(fontResultsList);
+  resetForms();
 }
 
 function makeCssFontSnippet(family, category) {
@@ -365,33 +364,22 @@ function makeHtmlFontLink(encodedFontFamily) {
   );
 }
 
+function handleForm(eventTarget) {
+  const formHandlers = {
+    js_quote_form: handleQuoteForm,
+    js_fonts_form: handleFontsForm,
+    js_unsplash_form: handleUnsplashForm,
+    js_behance_form: handleBehanceForm,
+  };
+
+  formHandlers[eventTarget]();
+}
+
 function watchForms() {
   $(document).on('submit', event => {
     const eventTarget = event.target.id;
-
     handleSubmit(event);
-
-    switch (eventTarget) {
-      case 'js-quote-form': {
-        handleQuoteForm();
-        break;
-      }
-
-      case 'js-fonts-form': {
-        handleFontsForm();
-        break;
-      }
-
-      case 'js-unsplash-form': {
-        handleUnsplashForm();
-        break;
-      }
-
-      case 'js-behance-form': {
-        handleBehanceForm();
-      }
-    }
-    resetForms();
+    handleForm(eventTarget);
   });
 }
 
