@@ -138,6 +138,7 @@ function displayResultsUnsplash(responseJson) {
       imageUrl: image.urls.regular,
       artist: image.user.name,
       portfolio: image.user.links.html,
+      alt_description: image.alt_description,
     };
     return makeUnsplashImageHtml(imageDetails);
   });
@@ -164,11 +165,11 @@ function makeFullUnsplashUrl(params) {
 }
 
 function makeUnsplashImageHtml(imageDetails) {
-  const { imageUrl, portfolio, artist } = imageDetails;
+  const { imageUrl, portfolio, artist, alt_description } = imageDetails;
 
   return `<li class="results__item">        
             <a href="${imageUrl}" target="_blank">
-              <img class="results__image" src=${imageUrl} alt="No result">
+              <img class="results__image" src=${imageUrl} alt="${alt_description}">
             </a>
             <a class="results__overlay" href=${portfolio} target="_blank">
               ${artist}
@@ -215,6 +216,7 @@ function getBehanceProjects(query, time) {
 }
 
 function displayResultsBehance(responseJson) {
+  console.log(responseJson);
   const images = responseJson.projects;
 
   const behanceResultsList = images.map(image => {
@@ -222,6 +224,7 @@ function displayResultsBehance(responseJson) {
       imageUrl: image.covers[404],
       artist: image.name,
       project: image.url,
+      alt_description: image.name,
     };
     return makeBehanceImageHtml(imageDetails);
   });
@@ -251,10 +254,10 @@ function makeFullBehanceUrl(params) {
 }
 
 function makeBehanceImageHtml(imageDetails) {
-  const { imageUrl, artist, project } = imageDetails;
+  const { imageUrl, artist, project, alt_description } = imageDetails;
   return `<li class="results__item">
             <a href="${imageUrl}" target="_blank">
-              <img class="results__image" src=${imageUrl} alt="No result">
+              <img class="results__image" src=${imageUrl} alt="${alt_description}">
             </a>
             <a class="results__overlay" href=${project} target="_blank">
               ${artist}
