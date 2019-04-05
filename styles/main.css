@@ -18,7 +18,8 @@ html {
 }
 
 body {
-  background: url(../images/assault.png) #303030;
+  background: url(../images/assault.png);
+  background-color: #111111;
   color: rgb(198, 198, 198);
   display: -ms-grid;
   display: grid;
