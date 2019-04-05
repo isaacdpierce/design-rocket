@@ -374,7 +374,6 @@ function handleForm(eventTarget) {
     js_unsplash_form: handleUnsplashForm,
     js_behance_form: handleBehanceForm,
   };
-
   formHandlers[eventTarget]();
 }
 
